@@ -61,15 +61,33 @@ function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 // TRENDS CONTROLLER
 
-potatoNews.controller('TrendCtrl', [
-'$scope',
-'trends',
+potatoNews.controller('TrendCtrl', ['$scope','trends',
 function($scope, trends){
-    
+
     console.log(' calling Trends controller ');
     $scope.trends = trends.trends;
     //setting title to blank here to prevent empty posts
     $scope.title = '';
+// debugger;
+
+    console.log(' jquery in anguluar', $('#searchInput').css('background-color','white'));  
+ 
+
+
+$('.nobullets').on("click", ".trendli", function(e){
+        console.log(' first inside ~~~~~~~~~~~~~ ');
+
+      $scope.$apply(function(){
+        console.log(' inside the click trend li  ');
+           $scope.myAngularVariable = !$scope.myAngularVariable;
+      });
+});
+
+
+
+
+  
+
     
     $scope.addPost = function(){
         if($scope.title === '') {return;}
@@ -270,9 +288,9 @@ potatoNews.factory('trends', ['$http', function ($http){    // new trend factory
     //using angular.copy() makes ui update properly
     o.getAll = function() {
         return $http.get('/trends').success(function (data) {
-            console.log('  ~~~~~~~~~~~~~~ inside trends  factory ~~~~~~~ data =', data);
+            // console.log('  ~~~~~~~~~~~~~~ inside trends  factory ~~~~~~~ data =', data);
             angular.copy(data, o.trends);
-            console.log('  ~~~~~~~~~~~~~~ inside trends  factory ~~~~~~~ trends =', o.trends);
+            // console.log('  ~~~~~~~~~~~~~~ inside trends  factory ~~~~~~~ trends =', o.trends);
         });
     };
     return o;

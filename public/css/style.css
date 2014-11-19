@@ -24,6 +24,12 @@ header h1 {
   padding: 2em;
   color: #FFF; }
 
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+
 footer {
   text-align: center;
   color: #888; }

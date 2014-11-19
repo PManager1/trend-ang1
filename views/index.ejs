@@ -6,15 +6,20 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
+
+
+    <link rel="stylesheet" href="css/style.css">
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
     <script src="js/angularApp.js"></script>
 
-    <link rel="stylesheet" href="css/style.css">
+
 
 </head>
 
-<body ng-app="potatoNews">
+<body ng-app="potatoNews" ng-cloak>
 
     <div class="row">
         <div class="col-md-12">
@@ -79,10 +84,8 @@
     <!-- TREND  -->
     <script type="text/ng-template" id="/trend.html">
 
-        <div class="container">
-        </div>
         <header class="my-header">
-            <h1>Trenz</h1>
+            <h1>Trenz ang</h1>
         </header>
 
 
@@ -107,11 +110,7 @@
             <div class="row ">
                 <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW'">
-
-                    <a href=#>
                     {{trend.trendName}}
-                    </a>
-
           <!-- <div>  _________________________ {{trend}} </div> -->
                     </li>
                 </ul>
@@ -161,9 +160,6 @@
 
 
 
-
-
-
     <!-- POSTS  -->
     <script type="text/ng-template" id="/comments.html">
         <h2>comments page</h2>
@@ -177,6 +173,7 @@
                 </span>
             </h3>
         </div>
+
 
         <div ng-repeat="comment in post.comments | orderBy: '-votes'">
             <span class="glyphicon glyphicon-thumbs-up" ng-click="upvote(comment)"></span>
@@ -196,6 +193,16 @@
             <button type="submit" class="btn btn-primary">Post to {{post.title}}</button>
         </form>
     </script>
+
+
+
+
+    
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"> </script>
+
+    <script src="js/script.js"></script>    
+
+
 
 </body>
 
