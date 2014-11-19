@@ -1,0 +1,43 @@
+body {
+  background: #E9E9E9;
+  font-family: 'palatino', 'Helvetica Neue', Helvetica, sans-serif; }
+
+a {
+  color: #333;
+  text-decoration: none; }
+  a:hover {
+    color: #000;
+    text-decoration: underline; }
+
+p {
+  background-color: red; }
+
+h1 {
+  font-size: 3em; }
+
+header {
+  background-color: #E74C3C; }
+
+header h1 {
+  text-align: center;
+  margin: 0 0 0 0;
+  padding: 2em;
+  color: #FFF; }
+
+footer {
+  text-align: center;
+  color: #888; }
+
+.glyphicon-thumbs-up,
+.glyphicon-thumbs-down {
+        cursor: pointer
+    }  
+
+.nobullets{
+   list-style-type: none;
+  /*font-size: 20px;   */
+
+}
+.trendli{
+  font-size: 15px;
+}
