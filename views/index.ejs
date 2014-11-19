@@ -13,7 +13,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-    <script src="js/angularApp.js"></script>
+
+
 
 
 
@@ -95,7 +96,7 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="searchInput"></label>
-                            <input type="text" class="form-control" id="searchInput" value="">
+                            <input type="text" class="form-control searchInput" id="searchInput">
                         </div>
 
                     </form>
@@ -118,7 +119,7 @@
 
             <ul class="col-md-3 nobullets"> <h4>US </h4>
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'US'">
-                    <a href=#>
+                    <a class="trenda" href=#>
                     {{trend.trendName}}
                     </a>
                     </li>
@@ -197,9 +198,10 @@
 
 
 
+ 
+    <script src="js/angularApp.js"></script>
     
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"> </script>
-
     <script src="js/script.js"></script>    
 
 

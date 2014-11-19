@@ -29,6 +29,11 @@ header h1 {
   display: none !important;
 }
 
+.searchInput{
+  font-size: 16px;
+  text-align: left !important;
+  top:12px;
+}
 
 footer {
   text-align: center;
