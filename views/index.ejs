@@ -41,12 +41,17 @@
             </div>
         </div>
 
+
+    
+
         <div class="container">
             <div class="row ">
                 <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
 
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW' | orderBy:'-_id'">
-                    {{trend.trendName}}
+                    
+
+                    <a href="#/posts/{{post._id}}">{{trend.trendName}} </a>
 
                     </li>
                 </ul>
@@ -81,18 +86,11 @@
 
 <hr/>
 
-
-
-
-<a ui-sref=".yt"> Route one t</a>
-
-
-
-
-        <div class="container">
+ <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12">
-                    <div ui-view></div>
+                   
+                   <a ui-sref=".yt" ng-click="serflink"> Route one t</a>
 
                 </div>
             </div>
@@ -102,11 +100,13 @@
 
 
 
-
-
-
-
-
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div ui-view></div>
+                </div>
+            </div>
+        </div>
     </script>
     <!-- end of /trend template -->
 

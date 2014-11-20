@@ -1,12 +1,12 @@
 var potatoNews = angular.module('potatoNews', ['ui.router'])
 
-
 potatoNews.config(function($sceDelegateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist([
     'self',
     'https://www.youtube.com/**'
   ]);
 });
+
 
 
 potatoNews.config([
@@ -27,20 +27,24 @@ potatoNews.config([
                     }]
                 }
             })
+
+
+
             .state('trend.yt', {
               url: "/yt",
               templateUrl: "yt.list.html",
-          //     controller: function($scope){
-          //       $scope.items = ["2A", "1List", "1Of", "Items"];
-          //     }
-          // })    
-                controller: 'youtubeCtrl',
-                resolve: {
+              controller: 'youtubeCtrl',
+              resolve: {
                     postPromise: ['ytfac', function(ytfac) {
                         return ytfac.getAll();
                     }]
                 }
             })
+
+
+
+
+
 
 
 
@@ -70,8 +74,6 @@ potatoNews.config([
 ]);
 
 
-
-
 // yt CONTROLLER
 
 potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
@@ -92,10 +94,9 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
     };
 
     $scope.getIframeSrc = function(src) {
-        console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
+        // console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
       return 'https://www.youtube.com/embed/' + src;
     };
-
 
 
     }
@@ -149,7 +150,7 @@ potatoNews.controller('TrendCtrl', ['$scope', 'trends',
             var text = ($(this).text());
             $('#searchInput').val(text);
             $scope.$apply(function() {
-                console.log(' inside the click trend li 1st ');
+                // console.log(' inside the click trend li 1st ');
             });
         });
 
