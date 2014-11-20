@@ -1,5 +1,14 @@
 var potatoNews = angular.module('potatoNews', ['ui.router'])
 
+
+potatoNews.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    'self',
+    'https://www.youtube.com/**'
+  ]);
+});
+
+
 potatoNews.config([
     '$stateProvider',
     '$urlRouterProvider',
@@ -73,6 +82,22 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
 
         console.log(' controller $scope.things = ', $scope.things);        
         console.log('  $scope.items = ', $scope.items);
+
+
+    $scope.ylinks =  ['v5Asedlj2cw','vRC64LiJdvo','p8xUVO74YDU'];
+
+
+    $scope.product = {
+      medium: $scope.ylinks
+    };
+
+    $scope.getIframeSrc = function(src) {
+        console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
+      return 'https://www.youtube.com/embed/' + src;
+    };
+
+
+
     }
 ]);
 

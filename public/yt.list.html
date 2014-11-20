@@ -1,8 +1,12 @@
 <h3> YT List of youtube Items </h3>
 
-<ul>
-  <li ng-repeat="thing in things">{{thing}}</li>
 
-  <li ng-repeat="item in items">{{item.etag}}</li>
-
-</ul>
+<div >
+  <div ng-repeat="media in product.medium">
+    <div class="thumbnail">
+      <div class="video-container">
+        <iframe width="100%" ng-src="{{getIframeSrc(media)}}" frameborder="0 " allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
