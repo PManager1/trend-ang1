@@ -67,9 +67,12 @@ potatoNews.config([
 
 potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
     function($scope, ytfac) {
-        console.log(' calling ~~~~ yt ~~~ controller ');
-        $scope.items = ytfac.ytfac;
-        console.log(' controller items = ', $scope.items.items);
+        $scope.items = ytfac.ytfac.items;
+         
+         $scope.things = ["A", "List", "Of", "Items"];
+
+        console.log(' controller $scope.things = ', $scope.things);        
+        console.log('  $scope.items = ', $scope.items);
     }
 ]);
 
