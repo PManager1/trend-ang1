@@ -9,6 +9,13 @@ var Comment = mongoose.model('Comment');
 var Trend = mongoose.model('Trend'); 
 
 
+var youtube = require('youtube-node');
+youtube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
+
+
+
+
+
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -17,19 +24,17 @@ router.get('/', function (req, res) {
 
 
 
+// */*/*/********/  // Youtube // */*/*/********/  // */*/*/********/  //
 
+router.get('/youtube', function (req, res, next) {
+    console.log(' !!!  callign /youtube  in the router.index   '.red);
+    youtube.search('jazzy b', 2, function(resultData) {
 
-// */*/*/********/  // trends US // */*/*/********/  // */*/*/********/  //
-
-router.get('/trends_us', function (req, res, next) {
-    console.log(' calling trend_us  within the router'.red);
-    Trend_US.find(function (err, trends) {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-        res.json(trends);
+        res.json(resultData);
+        console.log('resultData ='.red , resultData);
+        // console.log('resultData.items'.green,  resultData.items );    
     });
+    
 });
 
 
@@ -47,6 +52,19 @@ router.get('/trends', function (req, res, next) {
         res.json(trends);
     });
 });
+
+
+router.get('/youtube', function (req, res, next) {
+    Trend.find(function (err, trends) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.json(trends);
+    });
+});
+
+
 
 
 // */*/*/********/  //             posts             // */*/*/********/  //

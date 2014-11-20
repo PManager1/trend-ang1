@@ -5,13 +5,10 @@ potatoNews.config([
     '$urlRouterProvider',
     '$locationProvider',
     function($stateProvider, $urlRouterProvider, $locationProvider) {
-        //resolve ensures that any time home is entered, we always load all of the posts
-        //before the state finishes loading.  a blocking preload?
-        //more info at
-        //https://github.com/angular-ui/ui-router/wiki
+
 
         $stateProvider
-            .state('trend', { // */*/*/*/   new 
+            .state('trend', {    // */*/*/*/   new 
                 url: '/trend',
                 templateUrl: '/trend.html',
                 controller: 'TrendCtrl',
@@ -21,6 +18,23 @@ potatoNews.config([
                     }]
                 }
             })
+            .state('trend.yt', {
+              url: "/yt",
+              templateUrl: "yt.list.html",
+          //     controller: function($scope){
+          //       $scope.items = ["2A", "1List", "1Of", "Items"];
+          //     }
+          // })    
+                controller: 'youtubeCtrl',
+                resolve: {
+                    postPromise: ['ytfac', function(ytfac) {
+                        return ytfac.getAll();
+                    }]
+                }
+            })
+
+
+
             .state('home', {
                 url: '/home',
                 templateUrl: '/home.html',
@@ -28,16 +42,6 @@ potatoNews.config([
                 resolve: {
                     postPromise: ['posts', function(posts) {
                         return posts.getAll();
-                    }]
-                }
-            })
-            .state('comments', {
-                url: '/comments/:id',
-                templateUrl: '/comments.html',
-                controller: 'PostsCtrl',
-                resolve: {
-                    post: ['$stateParams', 'posts', function($stateParams, posts) {
-                        return posts.get($stateParams.id);
                     }]
                 }
             })
@@ -50,14 +54,55 @@ potatoNews.config([
                         return posts.get($stateParams.id);
                     }]
                 }
-            });
+            })
 
         $urlRouterProvider.otherwise('trend');
-
-        //$locationProvider.html5Mode(true);
-
     }
 ]);
+
+
+
+
+// yt CONTROLLER
+
+potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
+    function($scope, ytfac) {
+        console.log(' calling ~~~~ yt ~~~ controller ');
+        $scope.items = ytfac.ytfac;
+        console.log(' controller items = ', $scope.items.items);
+    }
+]);
+
+
+
+// yt FACTORY 
+var potatoNews = angular.module('potatoNews');
+
+potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
+    console.log(' inside the ycfac factory  ~~~~~~~~~~~~~');
+    // debugger;
+    var o = {
+        ytfac: []
+    };
+
+    o.getAll = function() {
+            console.log( 'calling  yt  getAll ');
+           return $http.get('/youtube').success(function(data) {
+            angular.copy(data, o.ytfac);
+            console.log( ' hola inner inner youtube c');
+        });
+    };
+    return o;
+}]);
+
+
+
+
+
+
+
+
+
 
 
 // TRENDS CONTROLLER
@@ -65,13 +110,11 @@ potatoNews.config([
 potatoNews.controller('TrendCtrl', ['$scope', 'trends',
     function($scope, trends) {
 
-        console.log(' calling Trends controller ');
+        // console.log(' calling Trends controller ');
         $scope.trends = trends.trends;
         //setting title to blank here to prevent empty posts
         $scope.title = '';
         // debugger;
-
-        console.log(' jquery in anguluar', $('#searchInput').css('background-color', 'white'));
 
 
         $('.nobullets').on("click", ".trendli", function(e) {
@@ -98,6 +141,7 @@ potatoNews.controller('TrendCtrl', ['$scope', 'trends',
 var potatoNews = angular.module('potatoNews');
 
 potatoNews.factory('trends', ['$http', function($http) { // new trend factory
+        // debugger;
     var o = {
         trends: []
     };
@@ -107,10 +151,11 @@ potatoNews.factory('trends', ['$http', function($http) { // new trend factory
     //client side posts object
     //using angular.copy() makes ui update properly
     o.getAll = function() {
-        return $http.get('/trends').success(function(data) {
+            $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
         });
     };
+        //grab a single post from the server
     return o;
 }]);
 

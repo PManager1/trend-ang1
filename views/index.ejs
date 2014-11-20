@@ -1,32 +1,117 @@
+<!doctype html>
+
 <html>
-
 <head>
-
     <title>Trends</title>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-
-
     <link rel="stylesheet" href="css/style.css">
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
-
-
-
-
 </head>
-
 <body ng-app="potatoNews" ng-cloak>
-
     <div class="row">
         <div class="col-md-12">
             <ui-view></ui-view>
         </div>
     </div>
+
+
+
+
+    <!-- TREND  -->
+    <script type="text/ng-template" id="/trend.html">
+
+        <header class="my-header">
+            <h1>Trenz ng</h1>
+        </header>
+
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-6 col-md-offset-3 column">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="searchInput"></label>
+                            <input type="text" class="form-control searchInput" id="searchInput">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row ">
+                <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
+
+                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW' | orderBy:'-_id'">
+                    {{trend.trendName}}
+
+                    </li>
+                </ul>
+
+            <ul class="col-md-3 nobullets"> <h4>US </h4>
+                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'US' | orderBy:'-_id'">
+                    <a class="trenda" href=#>
+                    {{trend.trendName}}
+                    </a>
+                    </li>
+                </ul>
+
+            <ul class="col-md-3 nobullets"> <h4>Asia </h4>
+                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'ASIA' | orderBy:'-_id'">
+                    <a href=#>
+                    {{trend.trendName}}
+                    </a>
+                    </li>
+                </ul>
+
+            <ul class="col-md-3 nobullets"> <h4>Europe </h4>
+                   <li class="trendli" ng-repeat="trend in trends | limitTo: '14' | filter:'EU' | orderBy:'-_id'">
+                    <a href=#>
+                    {{trend.trendName}}
+                    </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <hr>
+
+<hr/>
+
+
+
+
+<a ui-sref=".yt"> Route one t</a>
+
+
+
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div ui-view></div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </script>
+    <!-- end of /trend template -->
+
+
+
 
 
 
@@ -36,7 +121,7 @@
             <h1>Potato News</h1>
         </div>
 
-        {{posts}}
+
 
         <div ng-repeat="post in posts | orderBy: '-votes'">
             <span class="glyphicon glyphicon-thumbs-up" ng-click="upvote(post)"></span>
@@ -80,87 +165,6 @@
 
 
 
-
-
-    <!-- TREND  -->
-    <script type="text/ng-template" id="/trend.html">
-
-        <header class="my-header">
-            <h1>Trenz ang</h1>
-        </header>
-
-
-        <div class="container">
-            <div class="row clearfix">
-                <div class="col-md-6 col-md-offset-3 column">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="searchInput"></label>
-                            <input type="text" class="form-control searchInput" id="searchInput">
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="container">
-            <div class="row ">
-                <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW'">
-                    {{trend.trendName}}
-          <!-- <div>  _________________________ {{trend}} </div> -->
-                    </li>
-                </ul>
-
-
-            <ul class="col-md-3 nobullets"> <h4>US </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'US'">
-                    <a class="trenda" href=#>
-                    {{trend.trendName}}
-                    </a>
-                    </li>
-                </ul>
-
-            <ul class="col-md-3 nobullets"> <h4>Asia </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'ASIA'">
-                    <a href=#>
-                    {{trend.trendName}}
-                    </a>
-                    </li>
-                </ul>
-
-
-            <ul class="col-md-3 nobullets"> <h4>Europe </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '14' | filter:'EU'">
-                    <a href=#>
-                    {{trend.trendName}}
-                    </a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-
-
-        <hr>
-
-
-
-
-    </script>
-    <!-- end of /trend template -->
-
-
-
-
-
-
-
     <!-- POSTS  -->
     <script type="text/ng-template" id="/comments.html">
         <h2>comments page</h2>
@@ -174,7 +178,6 @@
                 </span>
             </h3>
         </div>
-
 
         <div ng-repeat="comment in post.comments | orderBy: '-votes'">
             <span class="glyphicon glyphicon-thumbs-up" ng-click="upvote(comment)"></span>
@@ -195,17 +198,8 @@
         </form>
     </script>
 
-
-
-
- 
     <script src="js/angularApp.js"></script>
-    
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"> </script>
     <script src="js/script.js"></script>    
-
-
-
 </body>
-
 </html>
