@@ -31,11 +31,26 @@ router.get('/youtube', function (req, res, next) {
     youtube.search('jazzy b', 2, function(resultData) {
 
         res.json(resultData);
-        console.log('resultData ='.red , resultData);
-        // console.log('resultData.items'.green,  resultData.items );    
+        // console.log('resultData ='.red , resultData);
     });
     
 });
+
+
+
+
+router.get('/youtube/:name', function (req, res, next) {
+    console.log(' ~~ :id callign /youtube router.index id= '.white, req.params.name); 
+        // var par =  req.params.name; 
+        // console.log( '~~~~~~ par => '.red, par);
+    youtube.search(req.params.name, 2, function(resultData) {
+
+        res.json(resultData);
+        console.log('resultData ='.red , resultData);
+    });
+});
+
+
 
 
 
@@ -54,15 +69,10 @@ router.get('/trends', function (req, res, next) {
 });
 
 
-router.get('/youtube', function (req, res, next) {
-    Trend.find(function (err, trends) {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-        res.json(trends);
-    });
-});
+
+
+
+
 
 
 

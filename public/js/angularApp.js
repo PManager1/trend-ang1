@@ -29,35 +29,31 @@ potatoNews.config([
             })
 
 
+            // .state('trend.yt', {
+            //   url: "/yt",
+            //   templateUrl: "yt.list.html",
+            //   controller: 'youtubeCtrl',
+            //     resolve: {
+            //         postPromise: ['ytfac', function(ytfac) {
+            //             return ytfac.getAll();
+            //         }]
+            //     }
+            // })
+
 
             .state('trend.yt', {
               url: "/yt",
               templateUrl: "yt.list.html",
               controller: 'youtubeCtrl',
-              resolve: {
-                    postPromise: ['ytfac', function(ytfac) {
-                        return ytfac.getAll();
+                     resolve: {
+                        post: ['$stateParams', 'ytfac', function ($stateParams, ytfac) {
+                            return ytfac.get($stateParams.id);
                     }]
                 }
             })
 
 
 
-
-
-
-
-
-            .state('home', {
-                url: '/home',
-                templateUrl: '/home.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    postPromise: ['posts', function(posts) {
-                        return posts.getAll();
-                    }]
-                }
-            })
             .state('posts', {
                 url: '/posts/:id',
                 templateUrl: '/posts.html',
@@ -80,10 +76,10 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
     function($scope, ytfac) {
         $scope.items = ytfac.ytfac.items;
          
-         $scope.things = ["A", "List", "Of", "Items"];
 
-        console.log(' controller $scope.things = ', $scope.things);        
-        console.log('  $scope.items = ', $scope.items);
+
+        // console.log(' controller $scope.things = ', $scope.things);        
+        // console.log('  $scope.items = ', $scope.items);
 
 
     $scope.ylinks =  ['v5Asedlj2cw','vRC64LiJdvo','p8xUVO74YDU'];
@@ -118,9 +114,17 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
             console.log( 'calling  yt  getAll ');
            return $http.get('/youtube').success(function(data) {
             angular.copy(data, o.ytfac);
-            console.log( ' hola inner inner youtube c');
         });
     };
+    o.get = function (id) {
+            id = 'nba';
+            console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  122 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+            return $http.get('/youtube/' + id).then(function (data) {
+            angular.copy(data, o.ytfac);
+            console.log(' !!!!!! get copied data = ', data);
+        });
+    };
+
     return o;
 }]);
 
