@@ -40,27 +40,13 @@ potatoNews.config([
             //     }
             // })
 
-
             .state('trend.yt', {
-              url: "/yt",
+              url: "youtube/:id",
               templateUrl: "yt.list.html",
               controller: 'youtubeCtrl',
                      resolve: {
                         post: ['$stateParams', 'ytfac', function ($stateParams, ytfac) {
                             return ytfac.get($stateParams.id);
-                    }]
-                }
-            })
-
-
-
-            .state('posts', {
-                url: '/posts/:id',
-                templateUrl: '/posts.html',
-                controller: 'PostsCtrl',
-                resolve: {
-                    post: ['$stateParams', 'posts', function($stateParams, posts) {
-                        return posts.get($stateParams.id);
                     }]
                 }
             })
@@ -75,26 +61,20 @@ potatoNews.config([
 potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
     function($scope, ytfac) {
         $scope.items = ytfac.ytfac.items;
-         
-
-
+        console.log(' ~~~ inside the   youtubeCtrl  Controller');
         // console.log(' controller $scope.things = ', $scope.things);        
         // console.log('  $scope.items = ', $scope.items);
-
-
     $scope.ylinks =  ['v5Asedlj2cw','vRC64LiJdvo','p8xUVO74YDU'];
-
-
     $scope.product = {
       medium: $scope.ylinks
     };
-
     $scope.getIframeSrc = function(src) {
         // console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
       return 'https://www.youtube.com/embed/' + src;
     };
-
-
+    $scope.grablink = function() {
+        console.log(' ~~~~~ callign grablink = ~~~~ ');
+    };
     }
 ]);
 
@@ -133,38 +113,23 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
 
 
 
-
-
-
-
-
 // TRENDS CONTROLLER
 
 potatoNews.controller('TrendCtrl', ['$scope', 'trends',
     function($scope, trends) {
 
-        // console.log(' calling Trends controller ');
         $scope.trends = trends.trends;
-        //setting title to blank here to prevent empty posts
         $scope.title = '';
-        // debugger;
 
+        $scope.contacts = [{
+              id: 0,
+              name: "Alice"
+            }, {
+              id: 1,
+              name: "Bob"
+            }];
 
-        $('.nobullets').on("click", ".trendli", function(e) {
-            var text = ($(this).text());
-            $('#searchInput').val(text);
-            $scope.$apply(function() {
-                // console.log(' inside the click trend li 1st ');
-            });
-        });
-
-        $('.form-group').on("change", ".searchInput", function(e) {
-            var text = ($(this).text());
-            $('#searchInput').val(text);
-            $scope.$apply(function() {
-                console.log(' inside the search bar ');
-            });
-        });
+            console.log(' $scope contacts = ',$scope.contacts);
     }
 ]);
 
@@ -178,11 +143,7 @@ potatoNews.factory('trends', ['$http', function($http) { // new trend factory
     var o = {
         trends: []
     };
-    //query the '/posts' route and, with .success(),
-    //bind a function for when that request returns
-    //the posts route returns a list, so we just copy that into the
-    //client side posts object
-    //using angular.copy() makes ui update properly
+
     o.getAll = function() {
             $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
@@ -191,11 +152,6 @@ potatoNews.factory('trends', ['$http', function($http) { // new trend factory
         //grab a single post from the server
     return o;
 }]);
-
-
-
-
-
 
 
 

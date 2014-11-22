@@ -42,6 +42,18 @@
         </div>
 
 
+
+ <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12">     
+                   <a ui-sref=".yt" ng-click="grablink()" > Next Route</a>
+                </div>
+            </div>
+        </div>
+    
+            <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
+
+             <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
     
 
         <div class="container">
@@ -49,9 +61,10 @@
                 <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
 
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW' | orderBy:'-_id'">
-                    
 
-                    <a href="#/posts/{{post._id}}">{{trend.trendName}} </a>
+
+                    
+                    <a ui-sref="#/youtube/:{{trend.trendName}}"> {{trend.trendName}} </a>
 
                     </li>
                 </ul>
@@ -86,15 +99,7 @@
 
 <hr/>
 
- <div class="container">
-            <div class="row clearfix">
-                <div class="col-md-12">
-                   
-                   <a ui-sref=".yt" ng-click="serflink"> Route one t</a>
 
-                </div>
-            </div>
-        </div>
 
 
 
