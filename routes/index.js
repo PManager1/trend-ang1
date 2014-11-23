@@ -41,7 +41,7 @@ router.get('/youtube', function (req, res, next) {
 
 router.get('/youtube/:name', function (req, res, next) {
     console.log(' ~~ :id callign /youtube router.index id= '.white, req.params.name); 
-    youtube.search(req.params.name, 2, function(resultData) {
+    youtube.search(req.params.name, 4, function(resultData) {
 
         res.json(resultData);
         console.log('resultData ='.red , resultData);

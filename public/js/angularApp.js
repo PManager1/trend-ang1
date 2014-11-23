@@ -28,36 +28,42 @@ potatoNews.config([
                 }
             })
 
-
-        .state('trend.yt', {
-            url: "/yt",
-            templateUrl: "yt.list.html",
-            controller: 'youtubeCtrl',
-            resolve: {
-                postPromise: ['ytfac', function(ytfac) {
-                    return ytfac.getAll();
-                }]
-            }
-        })
+        // .state('trend.yt', {
+        //     url: "/yt",
+        //     templateUrl: "yt.list.html",
+        //     controller: 'youtubeCtrl',
+        //     resolve: {
+        //         postPromise: ['ytfac', function(ytfac) {
+        //             return ytfac.getAll();
+        //         }]
+        //     }
+        // })
 
         .state('trend.detail', {
             url: '/:id',
             // loaded into ui-view of parent's template
             templateUrl: 'yt.detail.html',
 
-            controller: function($scope, $stateParams) {
+            controller: function($scope, $stateParams, ytfac) {
                 $scope.person = $scope.contacts[$stateParams.id];
 
-                console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id);                
-                console.log(" @@@@@@@@@@@@@@@@  $scope.person  =", $scope.person);
-                console.log(' ~~~ inside the   youtubeCtrl  Controller');
+                console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
+            
+                // console.log(" @@@@@@@@@@@@@@@@  $scope.person  =", $scope.person);
 
+
+
+                console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', ytfac.idfac);
                 // $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
+
+                $scope.ytfac = ytfac.idfac.data.items;
+
+                console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', $scope.ytfac);
 
                 $scope.ylinks = []; 
                 var yt_id = $stateParams.id;
                 $scope.ylinks.push(yt_id); 
-                console.log( ' $scope.ylinks  = ', $scope.ylinks);
+                console.log( ' $scope.ylinks  = ~~~~~~~~~~~~~~~~~ 61', $scope.ylinks);
 
                 $scope.product = {
                     medium: $scope.ylinks
@@ -67,19 +73,19 @@ potatoNews.config([
                     return 'https://www.youtube.com/embed/' + src;
                 };
 
-
+                $scope.searchquery = $stateParams.id; 
+                console.log(" $$$$$$$$$$$  $scope.searchquery =", $scope.searchquery);    
 
             },
             resolve: {
-                postPromise: ['ytfac', function(ytfac) {
-                    return ytfac.getAll();
 
+                ytPromise: ['$stateParams','ytfac', function($stateParams, ytfac) {
+                    // $scope.ids = ytfac.get($stateParams.id);
+                    // console.log(' 78 $scope.ids ++ = ',$scope.ids);
+                    return ytfac.get($stateParams.id);
                 }]
             }
         })
-
-
-
 
 
         $urlRouterProvider.otherwise('trend');
@@ -107,6 +113,24 @@ potatoNews.controller('TrendCtrl', ['$scope', 'trends',
         }];
 
         console.log(' $scope contacts = ', $scope.contacts);
+
+        $('.nobullets').on("click", ".trendli", function(e) {
+            var text = ($(this).text());
+            $('#searchInput').val(text);
+            $scope.$apply(function() {
+                // console.log(' inside the click trend li 1st ');
+            });
+        });
+
+        $('.form-group').on("change", ".searchInput", function(e) {
+            var text = ($(this).text());
+            $('#searchInput').val(text);
+            $scope.$apply(function() {
+                console.log(' inside the search bar ');
+            });
+        });
+
+
     }
 ]);
 
@@ -144,24 +168,30 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
 var potatoNews = angular.module('potatoNews');
 
 potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
-    console.log(' inside the ycfac factory  ~~~~~~~~~~~~~');
+    console.log(' inside the ycfac factory  ~~~~~~~~~~~~~ line 167 ');
     // debugger;
     var o = {
-        ytfac: []
+        ytfac: [],
+        idfac: []
     };
 
     o.getAll = function() {
         console.log('calling  yt  getAll ');
         return $http.get('/youtube').success(function(data) {
+            console.log('/youtube   data = ', data);            
             angular.copy(data, o.ytfac);
         });
     };
+
+
+
     o.get = function(id) {
-        id = 'nba';
-        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  122 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        // id = 'nba';
+        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
         return $http.get('/youtube/' + id).then(function(data) {
-            angular.copy(data, o.ytfac);
+            angular.copy(data, o.idfac);
             console.log(' !!!!!! get copied data = ', data);
+            console.log(' !!!!!! get 186 ~~ o.idfac = ',  o.idfac);            
         });
     };
 
@@ -186,6 +216,8 @@ potatoNews.factory('trends', ['$http', function($http) { // new trend factory
     o.getAll = function() {
         $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
+
+            console.log(' !!!!!! get 212 ~~ o.trends = ',  o.trends);             
         });
     };
     //grab a single post from the server

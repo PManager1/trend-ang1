@@ -46,7 +46,7 @@
  <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12">     
-                   <a ui-sref=".yt" ng-click="grablink()" > Next Route</a>
+                   <a href="#/trend/gurdas"> Next Route</a>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
             <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
 
              <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
-    
+
 
         <div class="container">
             <div class="row ">
@@ -86,7 +86,7 @@
                 </ul>
 
             <ul class="col-md-3 nobullets"> <h4>Europe </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '14' | filter:'EU' | orderBy:'-_id'">
+                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'EU' | orderBy:'-_id'">
                     <a href=#>
                     {{trend.trendName}}
                     </a>
