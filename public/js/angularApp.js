@@ -61,28 +61,31 @@ potatoNews.config([
 
             controller: function($scope, $stateParams, ytfac, _) {
 
-
                 console.log(' @@@@@@ underscore ~~~~~ ', _);
 
                 $scope.person = $scope.contacts[$stateParams.id];
-
                 console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
-            
-                // console.log(" @@@@@@@@@@@@@@@@  $scope.person  =", $scope.person);
-
-
-
                 console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', ytfac.idfac);
                 // $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
 
+
+ 
+
+                // grabing the items from response factory 
+
                 $scope.ytfac = ytfac.idfac.data.items;
 
-                console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', $scope.ytfac);
+                console.log('----->>> ytfac from the factory  !!!!!!!!!!!!!!!! returning  ytfac.idfac', $scope.ytfac);
 
-                $scope.ylinks = []; 
-                var yt_id = $stateParams.id;
-                $scope.ylinks.push(yt_id); 
-                console.log( ' $scope.ylinks  = ~~~~~~~~~~~~~~~~~ 61', $scope.ylinks);
+                var pluck =  _.pluck($scope.ytfac, 'id');
+                var pluck =  _.pluck(pluck, 'videoId');                
+
+                // var pluck = _pluck($scope.ylinks, 'id');
+                console.log(' plucked items =', pluck);
+                
+                $scope.ylinks = pluck;
+
+
 
                 $scope.product = {
                     medium: $scope.ylinks
