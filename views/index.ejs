@@ -57,39 +57,42 @@
              <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
 
 
+
+
+
         <div class="container">
             <div class="row ">
                 <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
 
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW' | orderBy:'-_id'">
 
-
-                    
-                    <a ui-sref="#/youtube/:{{trend.trendName}}"> {{trend.trendName}} </a>
-
+                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
+                    </a>
                     </li>
                 </ul>
+                
 
             <ul class="col-md-3 nobullets"> <h4>US </h4>
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'US' | orderBy:'-_id'">
-                    <a class="trenda" href=#>
-                    {{trend.trendName}}
+                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
                     </a>
                     </li>
                 </ul>
 
             <ul class="col-md-3 nobullets"> <h4>Asia </h4>
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'ASIA' | orderBy:'-_id'">
-                    <a href=#>
-                    {{trend.trendName}}
+                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
                     </a>
                     </li>
                 </ul>
 
             <ul class="col-md-3 nobullets"> <h4>Europe </h4>
                    <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'EU' | orderBy:'-_id'">
-                    <a href=#>
-                    {{trend.trendName}}
+                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
                     </a>
                     </li>
                 </ul>

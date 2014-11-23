@@ -61,37 +61,27 @@ potatoNews.config([
 
             controller: function($scope, $stateParams, ytfac, _) {
 
-                console.log(' @@@@@@ underscore ~~~~~ ', _);
 
-                $scope.person = $scope.contacts[$stateParams.id];
+                // $scope.person = $scope.contacts[$stateParams.id];
                 console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
+
                 console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', ytfac.idfac);
+
                 // $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
 
-
- 
-
                 // grabing the items from response factory 
-
                 $scope.ytfac = ytfac.idfac.data.items;
-
                 console.log('----->>> ytfac from the factory  !!!!!!!!!!!!!!!! returning  ytfac.idfac', $scope.ytfac);
-
                 var pluck =  _.pluck($scope.ytfac, 'id');
                 var pluck =  _.pluck(pluck, 'videoId');                
 
-                // var pluck = _pluck($scope.ylinks, 'id');
                 console.log(' plucked items =', pluck);
-                
                 $scope.ylinks = pluck;
-
-
-
                 $scope.product = {
                     medium: $scope.ylinks
                 };
+
                 $scope.getIframeSrc = function(src) {
-                    // console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
                     return 'https://www.youtube.com/embed/' + src;
                 };
 
@@ -102,13 +92,10 @@ potatoNews.config([
             resolve: {
 
                 ytPromise: ['$stateParams','ytfac', function($stateParams, ytfac) {
-                    // $scope.ids = ytfac.get($stateParams.id);
-                    // console.log(' 78 $scope.ids ++ = ',$scope.ids);
                     return ytfac.get($stateParams.id);
                 }]
             }
         })
-
 
         $urlRouterProvider.otherwise('trend');
     }
@@ -202,7 +189,7 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
 
 
     o.get = function(id) {
-        // id = 'nba';
+         o.idfac.length = 0
         console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);

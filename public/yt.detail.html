@@ -1,0 +1,15 @@
+<h3> Youtube Feed </h3>
+
+
+
+
+
+<div>
+  <div ng-repeat="media in product.medium">
+    <div class="thumbnail">
+      <div class="video-container">
+        <iframe width="100%" ng-src="{{getIframeSrc(media)}}" frameborder="0 " allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
