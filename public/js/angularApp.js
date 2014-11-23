@@ -1,3 +1,16 @@
+var underscore = angular.module('potatoNews', []);
+underscore.factory('_', function() {
+  return window._; // assumes underscore has already been loaded on the page
+});
+
+
+var app = angular.module('potatoNews', ['underscore']);
+
+
+
+
+
+
 var potatoNews = angular.module('potatoNews', ['ui.router'])
 
 potatoNews.config(function($sceDelegateProvider) {
@@ -15,6 +28,8 @@ potatoNews.config([
     '$locationProvider',
     function($stateProvider, $urlRouterProvider, $locationProvider) {
 
+
+        
 
         $stateProvider
             .state('trend', { // */*/*/*/   new 
@@ -44,7 +59,11 @@ potatoNews.config([
             // loaded into ui-view of parent's template
             templateUrl: 'yt.detail.html',
 
-            controller: function($scope, $stateParams, ytfac) {
+            controller: function($scope, $stateParams, ytfac, _) {
+
+
+                console.log(' @@@@@@ underscore ~~~~~ ', _);
+
                 $scope.person = $scope.contacts[$stateParams.id];
 
                 console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
@@ -135,13 +154,7 @@ potatoNews.controller('TrendCtrl', ['$scope', 'trends',
 ]);
 
 
-
-
-
-
-
 // yt CONTROLLER
-
 potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
     function($scope, ytfac) {
         $scope.items = ytfac.ytfac.items;
@@ -304,6 +317,14 @@ potatoNews.controller('PostsCtrl', [
 ]);
 
 
+// Underscore FACTORY 
+var potatoNews = angular.module('potatoNews');
+
+potatoNews.factory('_', ['$http', function($http) { // new trend factory
+    // debugger;
+    return window._;
+
+}]);
 
 
 

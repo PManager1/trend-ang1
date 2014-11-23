@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
+var underscore = require('underscore');
+
 //these models are found in the /models folder
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
