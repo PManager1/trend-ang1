@@ -1,10 +1,10 @@
 var potatoNews = angular.module('potatoNews', ['ui.router'])
 
 potatoNews.config(function($sceDelegateProvider) {
-  $sceDelegateProvider.resourceUrlWhitelist([
-    'self',
-    'https://www.youtube.com/**'
-  ]);
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'https://www.youtube.com/**'
+    ]);
 });
 
 
@@ -17,7 +17,7 @@ potatoNews.config([
 
 
         $stateProvider
-            .state('trend', {    // */*/*/*/   new 
+            .state('trend', { // */*/*/*/   new 
                 url: '/trend',
                 templateUrl: '/trend.html',
                 controller: 'TrendCtrl',
@@ -29,31 +29,91 @@ potatoNews.config([
             })
 
 
-            // .state('trend.yt', {
-            //   url: "/yt",
-            //   templateUrl: "yt.list.html",
-            //   controller: 'youtubeCtrl',
-            //     resolve: {
-            //         postPromise: ['ytfac', function(ytfac) {
-            //             return ytfac.getAll();
-            //         }]
-            //     }
-            // })
+        .state('trend.yt', {
+            url: "/yt",
+            templateUrl: "yt.list.html",
+            controller: 'youtubeCtrl',
+            resolve: {
+                postPromise: ['ytfac', function(ytfac) {
+                    return ytfac.getAll();
+                }]
+            }
+        })
 
-            .state('trend.yt', {
-              url: "youtube/:id",
-              templateUrl: "yt.list.html",
-              controller: 'youtubeCtrl',
-                     resolve: {
-                        post: ['$stateParams', 'ytfac', function ($stateParams, ytfac) {
-                            return ytfac.get($stateParams.id);
-                    }]
-                }
-            })
+        .state('trend.detail', {
+            url: '/:id',
+            // loaded into ui-view of parent's template
+            templateUrl: 'yt.detail.html',
+
+            controller: function($scope, $stateParams) {
+                $scope.person = $scope.contacts[$stateParams.id];
+
+                console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id);                
+                console.log(" @@@@@@@@@@@@@@@@  $scope.person  =", $scope.person);
+                console.log(' ~~~ inside the   youtubeCtrl  Controller');
+
+                // $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
+
+                $scope.ylinks = []; 
+                var yt_id = $stateParams.id;
+                $scope.ylinks.push(yt_id); 
+                console.log( ' $scope.ylinks  = ', $scope.ylinks);
+
+                $scope.product = {
+                    medium: $scope.ylinks
+                };
+                $scope.getIframeSrc = function(src) {
+                    // console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
+                    return 'https://www.youtube.com/embed/' + src;
+                };
+
+
+
+            },
+            resolve: {
+                postPromise: ['ytfac', function(ytfac) {
+                    return ytfac.getAll();
+
+                }]
+            }
+        })
+
+
+
+
 
         $urlRouterProvider.otherwise('trend');
     }
 ]);
+
+
+// TRENDS CONTROLLER
+
+potatoNews.controller('TrendCtrl', ['$scope', 'trends',
+    function($scope, trends) {
+
+        $scope.trends = trends.trends;
+        $scope.title = '';
+
+        $scope.contacts = [{
+            id: 0,
+            name: "Alice"
+        }, {
+            id: 1,
+            name: "Bob"
+        }, {
+            id: 2,
+            name: "Alice 2"
+        }];
+
+        console.log(' $scope contacts = ', $scope.contacts);
+    }
+]);
+
+
+
+
+
 
 
 // yt CONTROLLER
@@ -64,17 +124,17 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
         console.log(' ~~~ inside the   youtubeCtrl  Controller');
         // console.log(' controller $scope.things = ', $scope.things);        
         // console.log('  $scope.items = ', $scope.items);
-    $scope.ylinks =  ['v5Asedlj2cw','vRC64LiJdvo','p8xUVO74YDU'];
-    $scope.product = {
-      medium: $scope.ylinks
-    };
-    $scope.getIframeSrc = function(src) {
-        // console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
-      return 'https://www.youtube.com/embed/' + src;
-    };
-    $scope.grablink = function() {
-        console.log(' ~~~~~ callign grablink = ~~~~ ');
-    };
+        $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
+        $scope.product = {
+            medium: $scope.ylinks
+        };
+        $scope.getIframeSrc = function(src) {
+            // console.log(' ~~~~~ callign getIframe Scr = ~~~~ ',src);
+            return 'https://www.youtube.com/embed/' + src;
+        };
+        $scope.grablink = function() {
+            console.log(' ~~~~~ callign grablink = ~~~~ ');
+        };
     }
 ]);
 
@@ -91,15 +151,15 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
     };
 
     o.getAll = function() {
-            console.log( 'calling  yt  getAll ');
-           return $http.get('/youtube').success(function(data) {
+        console.log('calling  yt  getAll ');
+        return $http.get('/youtube').success(function(data) {
             angular.copy(data, o.ytfac);
         });
     };
-    o.get = function (id) {
-            id = 'nba';
-            console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  122 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-            return $http.get('/youtube/' + id).then(function (data) {
+    o.get = function(id) {
+        id = 'nba';
+        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  122 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.ytfac);
             console.log(' !!!!!! get copied data = ', data);
         });
@@ -113,43 +173,22 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
 
 
 
-// TRENDS CONTROLLER
-
-potatoNews.controller('TrendCtrl', ['$scope', 'trends',
-    function($scope, trends) {
-
-        $scope.trends = trends.trends;
-        $scope.title = '';
-
-        $scope.contacts = [{
-              id: 0,
-              name: "Alice"
-            }, {
-              id: 1,
-              name: "Bob"
-            }];
-
-            console.log(' $scope contacts = ',$scope.contacts);
-    }
-]);
-
-
 
 // Trends FACTORY 
 var potatoNews = angular.module('potatoNews');
 
 potatoNews.factory('trends', ['$http', function($http) { // new trend factory
-        // debugger;
+    // debugger;
     var o = {
         trends: []
     };
 
     o.getAll = function() {
-            $http.get('/trends').success(function(data) {
+        $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
         });
     };
-        //grab a single post from the server
+    //grab a single post from the server
     return o;
 }]);
 
@@ -310,17 +349,3 @@ potatoNews.factory('posts', ['$http', function($http) {
     };
     return o;
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
