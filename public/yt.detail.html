@@ -7,10 +7,10 @@
 
             <div class="row clearfix">
 
-                      <div class="col-md-6 column" ng-repeat="media in product.medium">
+                      <div class="col-md-6 youtube-block" ng-repeat="media in product.medium">
                         <div class="thumbnail">
                           <div class="video-container">
-                            <iframe width="100%" ng-src="{{getIframeSrc(media)}}" frameborder="0 " allowfullscreen></iframe>
+                            <iframe width="100%" height="250px" ng-src="{{getIframeSrc(media)}}" frameborder="0 " allowfullscreen></iframe>
                           </div>
                         </div>
                       </div>
