@@ -43,17 +43,6 @@ potatoNews.config([
                 }
             })
 
-        // .state('trend.yt', {
-        //     url: "/yt",
-        //     templateUrl: "yt.list.html",
-        //     controller: 'youtubeCtrl',
-        //     resolve: {
-        //         postPromise: ['ytfac', function(ytfac) {
-        //             return ytfac.getAll();
-        //         }]
-        //     }
-        // })
-
         .state('trend.detail', {
             url: '/:id',
             // loaded into ui-view of parent's template
