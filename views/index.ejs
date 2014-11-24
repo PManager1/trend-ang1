@@ -63,9 +63,7 @@
         <div class="container">
             <div class="row ">
                 <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
-
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'WW' | orderBy:'-_id'">
-
+                   <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">                   
                     <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
@@ -73,16 +71,20 @@
                 </ul>
                 
 
-            <ul class="col-md-3 nobullets"> <h4>US </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'US' | orderBy:'-_id'">
+
+          <ul class="col-md-3 nobullets"> <h4>US </h4>
+                   <li class="trendli" ng-repeat="trend in trends | filter:'US' | orderBy:'-_id' | limitTo: '12'">
                     <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
                     </li>
                 </ul>
 
+
+  
+
             <ul class="col-md-3 nobullets"> <h4>Asia </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'ASIA' | orderBy:'-_id'">
+                   <li class="trendli" ng-repeat="trend in trends | filter:'ASIA' | orderBy:'-_id' | limitTo: '12'">
                     <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
@@ -90,7 +92,7 @@
                 </ul>
 
             <ul class="col-md-3 nobullets"> <h4>Europe </h4>
-                   <li class="trendli" ng-repeat="trend in trends | limitTo: '104' | filter:'EU' | orderBy:'-_id'">
+                   <li class="trendli" ng-repeat="trend in trends | filter:'EU' | orderBy:'-_id' | limitTo: '12'">
                     <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
@@ -102,10 +104,6 @@
         <hr>
 
 <hr/>
-
-
-
-
 
 
 
