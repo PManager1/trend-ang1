@@ -3,13 +3,20 @@
 
 
 
+        <div class="container">
 
-<div>
-  <div ng-repeat="media in product.medium">
-    <div class="thumbnail">
-      <div class="video-container">
-        <iframe width="100%" ng-src="{{getIframeSrc(media)}}" frameborder="0 " allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-</div>
+            <div class="row clearfix">
+
+                      <div class="col-md-6 column" ng-repeat="media in product.medium">
+                        <div class="thumbnail">
+                          <div class="video-container">
+                            <iframe width="100%" ng-src="{{getIframeSrc(media)}}" frameborder="0 " allowfullscreen></iframe>
+                          </div>
+                        </div>
+                      </div>
+
+            </div>
+
+        </div>
+
+
