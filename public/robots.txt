@@ -1,2 +1,4 @@
-
-<p>robots.html</p>
+User-agent: *
+Disallow: /private/
+Disallow: /sample-page.html
+Disallow: /images/image.jpg
