@@ -1,3 +1,6 @@
+(function() {
+
+
 var underscore = angular.module('potatoNews', []);
 underscore.factory('_', function() {
   return window._; // assumes underscore has already been loaded on the page
@@ -22,6 +25,9 @@ potatoNews.config(function($sceDelegateProvider) {
 
 
 
+
+
+
 potatoNews.config([
     '$stateProvider',
     '$urlRouterProvider',
@@ -29,14 +35,17 @@ potatoNews.config([
     function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 
-        
+    $locationProvider.hashPrefix('!');         
 
         $stateProvider
             .state('trend', { // */*/*/*/   new 
                 url: '/trend',
-                templateUrl: '/trend.html',
-                controller: 'TrendCtrl',
+                controller: 'TrendCtrl',                
+                templateUrl: 'trend.html',
                 resolve: {
+                    slow : function() {
+                        return false;
+                    },
                     postPromise: ['trends', function(trends) {
                         return trends.getAll();
                     }]
@@ -101,46 +110,59 @@ potatoNews.config([
 ]);
 
 
-// TRENDS CONTROLLER
-
-potatoNews.controller('TrendCtrl', ['$scope', 'trends',
-    function($scope, trends) {
-
-        $scope.trends = trends.trends;
-        $scope.title = '';
-
-        $scope.contacts = [{
-            id: 0,
-            name: "Alice"
-        }, {
-            id: 1,
-            name: "Bob"
-        }, {
-            id: 2,
-            name: "Alice 2"
-        }];
-
-        console.log(' $scope contacts = ', $scope.contacts);
-
-        $('.nobullets').on("click", ".trendli", function(e) {
-            var text = ($(this).text());
-            $('#searchInput').val(text);
-            $scope.$apply(function() {
-                // console.log(' inside the click trend li 1st ');
-            });
-        });
-
-        $('.form-group').on("change", ".searchInput", function(e) {
-            var text = ($(this).text());
-            $('#searchInput').val(text);
-            $scope.$apply(function() {
-                console.log(' inside the search bar ');
-            });
-        });
 
 
-    }
-]);
+potatoNews.run(function($rootScope) {
+  // you can inject any instance here
+   $rootScope.test = 'stuff hidden';  
+
+    
+    var _getTopScope = function() {
+      return $rootScope;
+      //return angular.element(document).scope();
+    };
+
+    $rootScope.ready = function() {
+      var $scope = _getTopScope();
+      $scope.status = 'ready';
+      if(!$scope.$$phase) $scope.$apply();
+    };
+    $rootScope.loading = function() {
+      var $scope = _getTopScope();
+      $scope.status = 'loading';
+      if(!$scope.$$phase) $scope.$apply();
+    };
+    $rootScope.$on('$routeChangeStart', function() {
+      _getTopScope().loading();
+    });
+
+
+});
+
+
+
+
+
+
+// new TRENDS CONTROLLER
+
+potatoNews.controller('TrendCtrl', ['$scope', '$http', 'trends', function($scope, $http, trends) {
+   
+    $scope.trends = trends.trends;
+
+    console.log(' $scope.trends  =  ', $scope.trends);
+
+      var timeout = 2000;
+
+      setTimeout(function() {
+
+        $scope.ready();
+      }, timeout);
+
+  }]);
+
+
+
 
 
 // yt CONTROLLER
@@ -317,77 +339,42 @@ potatoNews.factory('_', ['$http', function($http) { // new trend factory
 
 
 
-// POSTS FACTORY 
 
-potatoNews.factory('posts', ['$http', function($http) {
-    var o = {
-        posts: []
+
+
+
+//  setting up the snapshot 
+
+
+  App = angular.module('App', []);
+
+
+
+  App.run(['$rootScope', function($rootScope) {
+    var _getTopScope = function() {
+      return $rootScope;
+      //return angular.element(document).scope();
     };
-    //query the '/posts' route and, with .success(),
-    //bind a function for when that request returns
-    //the posts route returns a list, so we just copy that into the
-    //client side posts object
-    //using angular.copy() makes ui update properly
-    o.getAll = function() {
-        return $http.get('/posts').success(function(data) {
-            angular.copy(data, o.posts);
-        });
+
+    $rootScope.ready = function() {
+      var $scope = _getTopScope();
+      $scope.status = 'ready';
+      if(!$scope.$$phase) $scope.$apply();
     };
-    //now we'll need to create new posts
-    //uses the router.post in index.js to post a new Post mongoose model to mongodb
-    //when $http gets a success back, it adds this post to the posts object in
-    //this local factory, so the mongodb and angular data is the same
-    //sweet!
-    o.create = function(post) {
-        return $http.post('/posts', post).success(function(data) {
-            o.posts.push(data);
-        });
+    $rootScope.loading = function() {
+      var $scope = _getTopScope();
+      $scope.status = 'loading';
+      if(!$scope.$$phase) $scope.$apply();
     };
-    //upvotes
-    o.upvote = function(post) {
-        //use the express route for this post's id to add an upvote to it in the mongo model
-        return $http.put('/posts/' + post._id + '/upvote')
-            .success(function(data) {
-                //if we know it worked on the backend, update frontend
-                console.log(' inside o update posts ');
-                post.votes += 1;
-            });
-    };
-    //downvotes
-    o.downvote = function(post) {
-        return $http.put('/posts/' + post._id + '/downvote')
-            .success(function(data) {
-                post.votes -= 1;
-            });
-    };
-    //grab a single post from the server
-    o.get = function(id) {
-        //use the express route to grab this post and return the response
-        //from that route, which is a json of the post data
-        //.then is a promise, a kind of newly native thing in JS that upon cursory research
-        //looks friggin sweet; TODO Learn to use them like a boss.  First, this.
-        return $http.get('/posts/' + id).then(function(res) {
-            return res.data;
-        });
-    };
-    //comments, once again using express
-    o.addComment = function(id, comment) {
-        return $http.post('/posts/' + id + '/comments', comment);
-    };
-    //upvote comments
-    o.upvoteComment = function(post, comment) {
-        return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote')
-            .success(function(data) {
-                comment.votes += 1;
-            });
-    };
-    //downvote comments
-    //I should really consolidate these into one voteHandler function
-    o.downvoteComment = function(post, comment) {
-        return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/downvote')
-            .success(function(data) {
-                comment.votes -= 1;
-            });
-    };
-    return o;
-}]);
+    $rootScope.$on('$routeChangeStart', function() {
+      _getTopScope().loading();
+    });
+  }]);
+
+
+  
+// end of setting up the snapshot 
+
+
+
+})();
