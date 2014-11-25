@@ -43,6 +43,16 @@ potatoNews.config([
                 }
             })
 
+
+        $stateProvider
+            .state('robots', { // */*/*/*/   new 
+                url: '/robots.txt',
+                templateUrl: '/robots.txt'
+                // controller: 'hola'
+            })
+
+
+
         .state('trend.detail', {
             url: '/:id',
             // loaded into ui-view of parent's template
