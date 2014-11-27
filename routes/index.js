@@ -2,13 +2,16 @@ var colors = require('colors');
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
-
-var underscore = require('underscore');
+var sm = require('sitemap');
+var _ = require('underscore');
 
 //these models are found in the /models folder
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
-var Trend = mongoose.model('Trend'); 
+
+
+
+// var Trend = mongoose.model('Trend'); 
 
 
 var youtube = require('youtube-node');
@@ -17,6 +20,142 @@ youtube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
 
 
 
+
+
+//~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/ DB retrieval ~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/
+
+var db = mongoose.connection;
+
+db.on('error', console.error);
+db.once('open', function() {
+  console.log(' db opened');
+});
+
+mongoose.connect('mongodb://localhost/news');
+
+var trendSchema = mongoose.Schema({
+    tName: String,
+    tName_h: String,    
+    region: String
+  });
+
+var Trend = mongoose.model('Trend', trendSchema);
+
+
+
+
+
+function getTrends(req, res, next) {
+
+     Trend.find(function(err, trends) {
+      if (err) return console.error(err);
+        
+        var pluckedT = _.pluck(trends, 'tName_h');
+
+
+        var changefreq_value = 'daily';
+        var priority_value = '0.3';  
+
+        var urlArr = [];
+
+        for (var i = 0; i < pluckedT.length; i++) {
+            var element = {}; 
+            // console.log('line 41 ~~~ pluckedT[i]  ='.red,pluckedT[i]);
+            element.url = pluckedT[i];
+            element.changefreq = 'daily';
+            element.priority = 0.3 ;
+            // console.log('line 45 ~~~  element'.white, element);
+            // console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
+            urlArr.push(element);
+            // console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
+        };
+
+        
+        console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
+
+
+        req.trends = urlArr;
+        // console.log(' req, trends  ==', req.trends);
+
+        req.newurl = {url: '/page-6/', changefreq: 'monthly', priority: 0.7}
+
+
+        next();// No need to return anything.
+    }); 
+}
+
+
+//~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/ DB retrieval  ends ~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/
+
+
+
+var sitemap = sm.createSitemap ({
+      hostname: 'http://rushnwash.com/#/trend/',
+      cacheTime: 600000,        // 600 sec - cache purge period
+      urls: [
+        { url: '/page-1/',  changefreq: 'daily', priority: 0.3 },
+        { url: '/page-2/',  changefreq: 'monthly',  priority: 0.7 },
+        { url: '/page-3/' }     // changefreq: 'weekly',  priority: 0.5
+      ]
+    });
+
+
+//~~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/ ROUTES ~~~~~~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/
+
+
+router.get('/sitemap.xml', getTrends, function(req, res) {
+    console.log(' req .trends  = '.blue, req.trends); 
+    console.log(' req. newurl  = '.blue, req.newurl); 
+
+    // var db = req.db;
+    // var collection = db.get('usercollection');
+    // collection.find({},{},function(e,docs){
+    // // console.log('docs  = '.red,docs);
+
+    // });
+
+    sitemap.toXML( function (xml) {
+      res.header('Content-Type', 'application/xml');
+      res.send( xml );
+  });
+
+
+
+  var users = req.trends;
+
+
+    _.each(users, function(user){
+        sitemap.add(user); 
+        console.log('user line 110 ='.white,user);
+    });
+
+  sitemap.add({url: '/page-4/', changefreq: 'monthly', priority: 0.7});
+  sitemap.add({url: '/page-5/'});
+  sitemap.add(req.newurl); 
+  console.log('sitemap.urls ======'.white, sitemap.urls);
+
+});
+
+
+
+//~~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/ Rest of the ROUTES ~~~~~~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ~~~~~~~~~~~~~~~~~~~
 
 
 /* GET home page. */
