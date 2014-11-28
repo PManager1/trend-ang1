@@ -52,6 +52,8 @@ function getTrends(req, res, next) {
         
         var pluckedT = _.pluck(trends, 'tName_h');
 
+        var pluckedT =  _.uniq(pluckedT );
+
 
         var changefreq_value = 'daily';
         var priority_value = '0.3';  
@@ -64,14 +66,14 @@ function getTrends(req, res, next) {
             element.url = pluckedT[i];
             element.changefreq = 'daily';
             element.priority = 0.3 ;
-            // console.log('line 45 ~~~  element'.white, element);
-            // console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
+                                    // console.log('line 45 ~~~  element'.white, element);
+                                    // console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
             urlArr.push(element);
-            // console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
+                                            // console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
         };
 
         
-        console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
+        // console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
 
 
         req.trends = urlArr;
@@ -93,9 +95,9 @@ var sitemap = sm.createSitemap ({
       hostname: 'http://rushnwash.com/#/trend/',
       cacheTime: 600000,        // 600 sec - cache purge period
       urls: [
-        { url: '/page-1/',  changefreq: 'daily', priority: 0.3 },
-        { url: '/page-2/',  changefreq: 'monthly',  priority: 0.7 },
-        { url: '/page-3/' }     // changefreq: 'weekly',  priority: 0.5
+        // { url: '/page-1/',  changefreq: 'daily', priority: 0.3 },
+        // { url: '/page-2/',  changefreq: 'monthly',  priority: 0.7 },
+        // { url: '/page-3/' }     // changefreq: 'weekly',  priority: 0.5
       ]
     });
 
@@ -104,8 +106,8 @@ var sitemap = sm.createSitemap ({
 
 
 router.get('/sitemap.xml', getTrends, function(req, res) {
-    console.log(' req .trends  = '.blue, req.trends); 
-    console.log(' req. newurl  = '.blue, req.newurl); 
+    // console.log(' req .trends  = '.blue, req.trends); 
+    // console.log(' req. newurl  = '.blue, req.newurl); 
 
     // var db = req.db;
     // var collection = db.get('usercollection');
@@ -126,13 +128,13 @@ router.get('/sitemap.xml', getTrends, function(req, res) {
 
     _.each(users, function(user){
         sitemap.add(user); 
-        console.log('user line 110 ='.white,user);
+        // console.log('user line 110 ='.white,user);
     });
 
-  sitemap.add({url: '/page-4/', changefreq: 'monthly', priority: 0.7});
-  sitemap.add({url: '/page-5/'});
-  sitemap.add(req.newurl); 
-  console.log('sitemap.urls ======'.white, sitemap.urls);
+  // sitemap.add({url: '/page-4/', changefreq: 'monthly', priority: 0.7});
+  // sitemap.add({url: '/page-5/'});
+  // sitemap.add(req.newurl); 
+  // console.log('sitemap.urls ======'.white, sitemap.urls);
 
 });
 
@@ -168,11 +170,11 @@ router.get('/', function (req, res) {
 // */*/*/********/  // Youtube // */*/*/********/  // */*/*/********/  //
 
 router.get('/youtube', function (req, res, next) {
-    console.log(' !!!  callign /youtube  in the router.index   '.red);
+    // console.log(' !!!  callign /youtube  in the router.index   '.red);
     youtube.search('jazzy b', 2, function(resultData) {
 
         res.json(resultData);
-        // console.log('resultData ='.red , resultData);
+                                             // console.log('resultData ='.red , resultData);
     });
     
 });
@@ -181,11 +183,11 @@ router.get('/youtube', function (req, res, next) {
 
 
 router.get('/youtube/:name', function (req, res, next) {
-    console.log(' ~~ :id callign /youtube router.index id= '.white, req.params.name); 
+    // console.log(' ~~ :id callign /youtube router.index id= '.white, req.params.name); 
     youtube.search(req.params.name, 4, function(resultData) {
 
         res.json(resultData);
-        console.log('resultData ='.red , resultData);
+                                      // console.log('resultData ='.red , resultData);
     });
 });
 
@@ -200,7 +202,7 @@ router.get('/youtube/:name', function (req, res, next) {
 router.get('/trends', function (req, res, next) {
     Trend.find(function (err, trends) {
         if (err) {
-            console.log(err);
+            // console.log(err);
             return next(err);
         }
         res.json(trends);
