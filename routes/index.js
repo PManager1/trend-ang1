@@ -55,8 +55,6 @@ function getTrends(req, res, next) {
         var pluckedT =  _.uniq(pluckedT);
 
 
-        var changefreq_value = 'daily';
-        var priority_value = '0.3';  
 
         var urlArr = [];
 
@@ -65,7 +63,7 @@ function getTrends(req, res, next) {
             // console.log('line 41 ~~~ pluckedT[i]  ='.red,pluckedT[i]);
             element.url = pluckedT[i];
             element.changefreq = 'daily';
-            element.priority = 0.3 ;
+            element.priority = 0.8;
                                     // console.log('line 45 ~~~  element'.white, element);
                                     // console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
             urlArr.push(element);
@@ -73,7 +71,7 @@ function getTrends(req, res, next) {
         };
 
         
-        // console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
+        console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
 
 
         console.log( ' urlArr.length =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr.length);
