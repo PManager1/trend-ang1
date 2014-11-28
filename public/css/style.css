@@ -58,6 +58,8 @@ footer {
 }
 .trendli{
   font-size: 15px;
+  max-width:200px;
+  word-wrap:break-word;
 }
 
 
