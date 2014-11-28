@@ -52,7 +52,7 @@ function getTrends(req, res, next) {
         
         var pluckedT = _.pluck(trends, 'tName_h');
 
-        var pluckedT =  _.uniq(pluckedT );
+        var pluckedT =  _.uniq(pluckedT);
 
 
         var changefreq_value = 'daily';
@@ -75,6 +75,8 @@ function getTrends(req, res, next) {
         
         // console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
 
+
+        console.log( ' urlArr.length =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr.length);
 
         req.trends = urlArr;
         // console.log(' req, trends  ==', req.trends);
