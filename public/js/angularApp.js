@@ -58,7 +58,7 @@ potatoNews.config([
             // loaded into ui-view of parent's template
             templateUrl: 'yt.detail.html',
 
-            controller: function($scope, $stateParams, ytfac, _) {
+            controller: function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval) {
 
 
                 // $scope.person = $scope.contacts[$stateParams.id];
@@ -85,7 +85,62 @@ potatoNews.config([
                 };
 
                 $scope.searchquery = $stateParams.id; 
-                console.log(" $$$$$$$$$$$  $scope.searchquery =", $scope.searchquery);    
+                console.log(" $$$$$$$$$$$  $scope.searchquery =", $scope.searchquery); 
+
+
+//refresh the view 
+                $scope.refreshView = function  () {
+                    console.log(' clicked refresh View');    
+                }; 
+
+
+
+//refresh the view 
+
+
+
+// instagram
+
+                $scope.example1 = {
+                    hash: $stateParams.id
+                };
+
+
+                var instagramSuccess = function(scope, res) {
+                    if (res.meta.code !== 200) {
+                        scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
+                        return;
+                    }
+                    if (res.data.length > 0) {
+                        scope.items = res.data;
+                    } else {
+                        scope.error = "This hashtag has returned no results";
+                    }
+                };
+
+
+
+
+
+            function loadInstagram () {
+                      Instagram.get(12, $scope.example1.hash).success(function(response) {
+                        console.log(' instagram  response  = ', response);
+                        instagramSuccess($scope.example1, response);
+                         $state.reload();  
+                    });
+            };
+
+            loadInstagram();
+
+            $interval(function() {
+                 loadInstagram();
+                console.log(' calling  loadInstagram  function'); 
+                        console.log('    ********************************************* ');                                
+            }, 5000);
+
+
+
+// instagram end
 
             },
             resolve: {
@@ -99,6 +154,45 @@ potatoNews.config([
         $urlRouterProvider.otherwise('trend');
     }
 ]);
+
+
+
+//  insta factory 
+
+// yt FACTORY 
+var potatoNews = angular.module('potatoNews');
+
+potatoNews.factory('Instagram', ['$http',
+
+    function($http) {
+        var base = "https://api.instagram.com/v1";
+        // get your own client id http://instagram.com/developer/
+        var clientId = '1596378b366a469b90c50096477ac00c';
+        return {
+            'get': function(count, hashtag) {
+                var request = '/tags/' + hashtag + '/media/recent';
+                var url = base + request;
+                var config = {
+                    'params': {
+                        'client_id': clientId,
+                        'count': count,
+                        'callback': 'JSON_CALLBACK'
+                    }
+                };
+                return $http.jsonp(url, config);
+            }
+        };
+    }
+]);
+
+
+
+
+
+
+
+
+
 
 
 // TRENDS CONTROLLER

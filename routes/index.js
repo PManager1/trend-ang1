@@ -71,10 +71,10 @@ function getTrends(req, res, next) {
         };
 
         
-        console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr);
+        console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ urlArr  = '.white, urlArr);
 
 
-        console.log( ' urlArr.length =~~~~~~~~~~~~~~~~ line 51 ~~~ white '.white, urlArr.length);
+        console.log( ' urlArr.length =~~~~~~~~~~~~~~~~ line  ~~~ white ==> '.red, urlArr.length);
 
         req.trends = urlArr;
         // console.log(' req, trends  ==', req.trends);

@@ -1,5 +1,3 @@
-
-
 <div class="container">
     <h2>Youtube Feed</h2>
     <div class="row clearfix">
@@ -14,3 +12,33 @@
     </div>
 
 </div>
+
+
+
+
+<div class="container">
+    <h2>Instagram Feed</h2>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h3>#{{example1.hash}}</h3>
+                </div>
+                
+                <div class="panel-body">
+                        <div class="col-md-4 instagram-item" ng-repeat="item in example1.items">
+                            <a ng-href="{{item.link}}">
+                                <img width="300" height="280" ng-src="{{ item.images.low_resolution.url }}" src="" alt="">
+                            </a>
+                        </div>
+                    <div ng-show="example1.error" class="alert alert-danger">
+                        <strong>Warning!</strong>
+                        <br/>{{example1.error}}.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
