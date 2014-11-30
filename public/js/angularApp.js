@@ -132,11 +132,11 @@ potatoNews.config([
 
             loadInstagram();
 
-            $interval(function() {
-                 loadInstagram();
-                console.log(' calling  loadInstagram  function'); 
-                        console.log('    ********************************************* ');                                
-            }, 5000);
+            // $interval(function() {
+            //      loadInstagram();
+            //     console.log(' calling  loadInstagram  function'); 
+            //             console.log('    ********************************************* ');                                
+            // }, 5000);
 
 
 

@@ -44,7 +44,6 @@ var Trend = mongoose.model('Trend', trendSchema);
 
 
 
-
 function getTrends(req, res, next) {
 
      Trend.find(function(err, trends) {
@@ -53,6 +52,8 @@ function getTrends(req, res, next) {
         var pluckedT = _.pluck(trends, 'tName_h');
 
         var pluckedT =  _.uniq(pluckedT);
+
+        var pluckedT =  pluckedT.splice(1, 10);      
 
 
 
@@ -92,7 +93,7 @@ function getTrends(req, res, next) {
 
 
 var sitemap = sm.createSitemap ({
-      hostname: 'http://rushnwash.com/#/trend/',
+      hostname: 'http://localhost:9000/#/trend/',
       cacheTime: 600000,        // 600 sec - cache purge period
       urls: [
         // { url: '/page-1/',  changefreq: 'daily', priority: 0.3 },

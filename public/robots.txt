@@ -1,3 +1,1 @@
-User-agent: *
-Disallow: /private/
-Sitemap: http://www.rushnwash.com/sitemap.xml
+Sitemap: http://localhost:9000/sitemap.xml
