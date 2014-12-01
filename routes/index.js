@@ -53,7 +53,7 @@ function getTrends(req, res, next) {
 
         var pluckedT =  _.uniq(pluckedT);
 
-        var pluckedT =  pluckedT.splice(1, 10);      
+        // var pluckedT =  pluckedT.splice(1, 10);      
 
 
 
@@ -93,7 +93,7 @@ function getTrends(req, res, next) {
 
 
 var sitemap = sm.createSitemap ({
-      hostname: 'http://localhost:9000/#/trend/',
+      hostname: 'http://rushnwash.com/#/trend/',
       cacheTime: 600000,        // 600 sec - cache purge period
       urls: [
         // { url: '/page-1/',  changefreq: 'daily', priority: 0.3 },
