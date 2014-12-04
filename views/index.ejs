@@ -1,6 +1,7 @@
 <!doctype html>
 
 <html>
+
 <head>
     <meta name="msvalidate.01" content="3E91B0BF8BC34B1E25441593FC572CDF" />
 
@@ -15,11 +16,12 @@
 
     <script src="js/ui-router0.2.10.js"></script>
 
-    <script src="js/underscore.js-1.7.0.js"></script>  
-    <script src="js/GA.js"></script>  
-    
+    <script src="js/underscore.js-1.7.0.js"></script>
+    <script src="js/GA.js"></script>
+
 
 </head>
+
 <body ng-app="potatoNews" ng-cloak>
     <div class="row">
         <div class="col-md-12">
@@ -35,77 +37,89 @@
     <script type="text/ng-template" id="/trend.html">
 
         <header class="my-header">
-           <a href="/"> <h1 class="h1trend">Trending</h1>  </a>
+            <a href="/">
+                <h1 class="h1trend">Trending</h1> </a>
         </header>
+
+
+
 
 
         <div class="container">
             <div class="row clearfix">
-                <div class="col-md-6 col-md-offset-3 column">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="searchInput"></label>
-                            <input type="text" class="form-control searchInput" id="searchInput">
+                <div class="col-md-10 col-md-offset-2 column">
+
+
+                   
+                        <div id="DIV_4">
+                            <div id="DIV_5">
+                                <input id="INPUT_6" ng-model="query" name="search[query]" placeholder="Search more trends...." type="text" />
+                            </div>
+                            <div id="DIV_7">
+                                <a href="#/trend/{{query}}" value="search" id="INPUT_8">search<a/>
+                                
+                            </div>
+
                         </div>
 
-                    </form>
+
                 </div>
             </div>
         </div>
 
 
 
- <div class="container">
-            <div class="row clearfix">
-                <div class="col-md-12">     
-                   <a href="#/trend/gurdas" ng-click="refreshView()"> Next Route</a>
-                   <button ng-click="refreshView()">Refresh view</button>
-                </div>
-            </div>
-        </div>
-    
-            <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
-
-             <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
 
 
+
+
+
+
+
+        <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
+
+        <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
 
 
 
         <div class="container">
             <div class="row ">
-                <ul class="col-md-3 nobullets"> <h4>World-wide </h4>
-                   <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">                   
-                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
-                    {{trend.tName}}
-                    </a>
-                    </li>
-                </ul>
-                
-
-
-          <ul class="col-md-3 nobullets"> <h4>US </h4>
-                   <li class="trendli" ng-repeat="trend in trends | filter:'US' | orderBy:'-_id' | limitTo: '12'">
-                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                <ul class="col-md-3 nobullets">
+                    <h4>World-wide </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
                     </li>
                 </ul>
 
 
-  
 
-            <ul class="col-md-3 nobullets"> <h4>Asia </h4>
-                   <li class="trendli" ng-repeat="trend in trends | filter:'ASIA' | orderBy:'-_id' | limitTo: '12'">
-                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                <ul class="col-md-3 nobullets">
+                    <h4>US </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'US' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
                     </li>
                 </ul>
 
-            <ul class="col-md-3 nobullets"> <h4>Europe </h4>
-                   <li class="trendli" ng-repeat="trend in trends | filter:'EU' | orderBy:'-_id' | limitTo: '12'">
-                    <a class="trenda" href="#/trend/{{trend.tName_h}}">
+
+
+
+                <ul class="col-md-3 nobullets">
+                    <h4>Asia </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'ASIA' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
+                    </a>
+                    </li>
+                </ul>
+
+                <ul class="col-md-3 nobullets">
+                    <h4>Europe </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'EU' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
                     </a>
                     </li>
@@ -132,14 +146,16 @@
 
 
 
-  
+
 
 
 
     <script src="js/angularApp.js"></script>
 
-    <script src="js/jquery.js"> </script>
+    <script src="js/jquery.js">
+    </script>
 
-    <script src="js/script.js"></script>    
+    <script src="js/script.js"></script>
 </body>
+
 </html>
