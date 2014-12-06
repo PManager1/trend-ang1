@@ -7,7 +7,7 @@ a {
   text-decoration: none; }
   a:hover {
     color: #000;
-    text-decoration: underline; }
+    text-decoration: none; }
 
 p {
   background-color: red; }
@@ -354,6 +354,25 @@ html,body {
     transition: background-color 0.3s ease-out 0s;
 }/*#INPUT_8*/
 
+
+.orange-btn{
+  background-color: #dd4921;
+font-family: Montserrat,sans-serif!important;
+font-weight: 400;
+text-transform: uppercase;
+font-size: 12px;
+
+
+}
+
+.orange-btn a:hover {
+    text-decoration: none !important;
+    color: black;
+}
+.orange-btn a:active {
+    text-decoration: none !important;
+    color: black;    
+}
 
 
 
