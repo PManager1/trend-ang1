@@ -1,11 +1,22 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var favicon = require('express-favicon');
+
 var app = express();
+
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
+console.log(' ~~~~~~~~~ dirname =', __dirname);
+
+// app.use(favicon(__dirname + '/public/favicon.ico'));
+
+// app.use(favicon(__dirname + '/favicon.ico'));
+
 
 var mongoose = require('mongoose');
 
@@ -27,6 +38,9 @@ var users = require('./routes/users');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
+
+
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -36,6 +50,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
+
+
+// app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
+
+
 
 app.use('/', routes);
 app.use('/users', users);
