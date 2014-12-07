@@ -86,6 +86,7 @@
             <div class="row ">
                 <ul class="col-md-3 nobullets">
                     <h4>World-wide </h4>
+                    <hr>
                     <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">
                         <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
