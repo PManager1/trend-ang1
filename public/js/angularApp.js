@@ -48,13 +48,33 @@ potatoNews.config([
             })
 
 
-
         .state('trend.detail', {
             url: '/:id',
             // loaded into ui-view of parent's template
             templateUrl: 'yt.detail.html',
 
-            controller: function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval) {
+            controller: 'idCtrl',
+            resolve: {
+
+                ytPromise: ['$stateParams','ytfac', function($stateParams, ytfac) {
+                    return ytfac.get($stateParams.id);
+                }]
+            }
+        })
+
+        $urlRouterProvider.otherwise('trend');
+    }
+]);
+
+
+
+
+// id controller
+
+
+potatoNews.controller('idCtrl', ['$scope', '$state', '$window','$stateParams','ytfac','_','Instagram','$interval',
+
+function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval) {
 
 
                 // $scope.person = $scope.contacts[$stateParams.id];
@@ -82,21 +102,12 @@ potatoNews.config([
 
                 $scope.searchquery = $stateParams.id; 
                 console.log(" $$$$$$$$$$$  $scope.searchquery =", $scope.searchquery); 
-
-
 //refresh the view 
                 $scope.refreshView = function  () {
                     console.log(' clicked refresh View');    
                 }; 
-
-
-
 // end refresh the view 
-
-
-
 // instagram
-
                 $scope.example1 = {
                     hash: $stateParams.id
                 };
@@ -115,9 +126,6 @@ potatoNews.config([
                 };
 
 
-
-
-
             function loadInstagram () {
                       Instagram.get(12, $scope.example1.hash).success(function(response) {
                         console.log(' instagram  response  = ', response);
@@ -127,34 +135,19 @@ potatoNews.config([
             };
 
             loadInstagram();
-
-            // $interval(function() {
-            //      loadInstagram();
-            //     console.log(' calling  loadInstagram  function'); 
-            //             console.log('    ********************************************* ');                                
-            // }, 5000);
+            
 
 
-
-// instagram end
-
-            },
-            resolve: {
-
-                ytPromise: ['$stateParams','ytfac', function($stateParams, ytfac) {
-                    return ytfac.get($stateParams.id);
-                }]
-            }
-        })
-
-        $urlRouterProvider.otherwise('trend');
-    }
+            
+   }
 ]);
 
 
 
 
-// id controller
+
+
+
 
 
 

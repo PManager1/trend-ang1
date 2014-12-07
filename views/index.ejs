@@ -16,7 +16,9 @@
 
     <script src="js/ui-router0.2.10.js"></script>
 
+
     <script src="js/underscore.js-1.7.0.js"></script>
+
     <script src="js/GA.js"></script>
 
 
@@ -86,7 +88,7 @@
             <div class="row ">
                 <ul class="col-md-3 nobullets">
                     <h4>World-wide </h4>
-                    <hr>
+
                     <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">
                         <a class="trenda" href="#/trend/{{trend.tName_h}}">
                     {{trend.tName}}
@@ -153,8 +155,7 @@
 
     <script src="js/angularApp.js"></script>
 
-    <script src="js/jquery.js">
-    </script>
+    <script src="js/jquery.js"> </script>
 
     <script src="js/script.js"></script>
 </body>
