@@ -1,5 +1,10 @@
+ ~/Movies/code/meanStack/trend-ang1 on master!
+± no bin/www
 
 
+
+ ~/Movies/mongodb-osx-x86_64-2.6.4
+○ bin/mongod
 
 
 
@@ -7,7 +12,7 @@
 =========
 
 
-Potato News is a horrible placeholder name I'm using, I'm just using this project to learn the MEAN stack better.
+is a horrible placeholder name I'm using, I'm just using this project to learn the MEAN stack better.
 
 The thinkster article shows you how to use the whole stack to make a simple article app kind of like reddit.  It has comments tied to each article, and an upvote system for individual posts and comments.
 

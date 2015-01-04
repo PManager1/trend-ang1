@@ -107,15 +107,6 @@ var sitemap = sm.createSitemap ({
 
 
 router.get('/sitemap.xml', getTrends, function(req, res) {
-    // console.log(' req .trends  = '.blue, req.trends); 
-    // console.log(' req. newurl  = '.blue, req.newurl); 
-
-    // var db = req.db;
-    // var collection = db.get('usercollection');
-    // collection.find({},{},function(e,docs){
-    // // console.log('docs  = '.red,docs);
-
-    // });
 
     sitemap.toXML( function (xml) {
       res.header('Content-Type', 'application/xml');
@@ -142,8 +133,6 @@ router.get('/sitemap.xml', getTrends, function(req, res) {
 
 
 //~~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/ Rest of the ROUTES ~~~~~~~~~~~~~~~~~~~~~~/~~~~~~~~~~~~~~~~~~~~~~/
-
-
 
 
 
@@ -272,74 +261,5 @@ router.get('/posts/:post', function (req, res) {
     });
 });
 
-// 2 route for trend upvotes     // */*/*/*/   =>  new 
-router.put('/trends/:trend/upvote', function (req, res, next) {
-    console.log('2 calling upvote for route/index  req.trend ~~~~',req.trend);
-    req.trend.upvote(function (err, trend) {
-        if (err) { return next(err); }
-        res.json(trend);
-    });
-});
-
-//route for post upvotes
-router.put('/posts/:post/upvote', function (req, res, next) {
-    console.log('1 calling upvote for route/index req.post ~~~~',req.post);
-    req.post.upvote(function (err, post) {
-        if (err) { return next(err); }
-        res.json(post);
-    });
-});
-
-//route for post downvotes
-router.put('/posts/:post/downvote', function (req, res, next) {
-    console.log('downvote');
-    req.post.downvote(function (err, post) {
-        if (err) { return next(err); }
-        res.json(post);
-    });
-});
-
-
-
-
-//comments routing, per post
-router.post('/posts/:post/comments', function (req, res, next) {
-    //pass the request body into a new Comment mongoose model
-    console.log('potato');
-    var comment = new Comment(req.body);
-    console.log('pajama');
-    //check for errors, and save the comment if none
-    comment.save(function (err, comment) {
-        if (err) { return next(err); }
-        //no http errors, add this comment to the comments array
-        req.post.comments.push(comment);
-        
-        req.post.save(function (err, post) {
-            if (err) { return next(err); }
-            
-            res.json(comment);
-        });
-    });
-});
-
-router.get('/posts/:post/comments', function (req, res) {
-    res.json(req.post.comments);
-});
-
-//comment upvotes
-router.put('/posts/:post/comments/:comment/upvote', function (req, res, next) {
-    req.comment.upvote(function (err, comment) {
-        if (err) { return next(err); }
-        res.json(comment);
-    });
-});
-
-//comment downvotes
-router.put('/posts/:post/comments/:comment/downvote', function (req, res, next) {
-    req.comment.downvote(function (err, comment) {
-        if (err) { return next(err); }
-        res.json(comment);
-    });
-});
 
 module.exports = router;

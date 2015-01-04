@@ -127,8 +127,9 @@ function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval)
 
 
             function loadInstagram () {
-                      Instagram.get(12, $scope.example1.hash).success(function(response) {
+                      Instagram.get(12, $stateParams.id).success(function(response) {
                         console.log(' instagram  response  = ', response);
+                        console.log(' ~~~~~~~~~~~~~~~ $scope.example1 =', $scope.example1);
                         instagramSuccess($scope.example1, response);
                          $state.reload();  
                     });
@@ -138,9 +139,40 @@ function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval)
             
 
 
-            
+
    }
 ]);
+
+
+
+
+// wiki FACTORY 
+var potatoNews = angular.module('potatoNews');
+
+potatoNews.factory('wiki', ['$http', function($http) { // new trend factory
+    console.log(' inside the ycfac factory  ~~~~~~~~~~~~~ line 167 ');
+    // debugger;
+    var o = {
+        ytfac: [],
+        idfac: []
+    };
+
+
+    o.get = function(id) {
+         o.idfac.length = 0
+        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
+        return $http.get('/youtube/' + id).then(function(data) {
+            angular.copy(data, o.idfac);
+            console.log(' !!!!!! get copied data = ', data);
+            console.log(' !!!!!! get 186 ~~ o.idfac = ',  o.idfac);            
+        });
+    };
+
+    return o;
+}]);
+
+
+
 
 
 
@@ -153,8 +185,6 @@ function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval)
 
 
 //  insta factory 
-
-// yt FACTORY 
 var potatoNews = angular.module('potatoNews');
 
 potatoNews.factory('Instagram', ['$http',
