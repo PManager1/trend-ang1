@@ -1,5 +1,5 @@
-<div class="container">
-    <h2>Youtube Feed</h2>
+<div ng-if="product.medium" class="container">
+    <h2>Youtube2 Feed</h2>
     <div class="row clearfix">
 
         <div class="col-md-6 youtube-block" ng-repeat="media in product.medium">
@@ -45,7 +45,8 @@
 
 
 
-<div class="container">
+
+<div ng-if="product.medium" class="container">
     <h2>Wikipedia Feed</h2>
     <div class="row clearfix">
 
