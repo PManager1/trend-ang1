@@ -48,14 +48,12 @@ function getTrends(req, res, next) {
 
      Trend.find(function(err, trends) {
       if (err) return console.error(err);
-        
+console.log(' callign trends .... in Routes.index.js  line 51');        
         var pluckedT = _.pluck(trends, 'tName_h');
 
         var pluckedT =  _.uniq(pluckedT);
 
         // var pluckedT =  pluckedT.splice(1, 10);      
-
-
 
         var urlArr = [];
 
@@ -65,10 +63,10 @@ function getTrends(req, res, next) {
             element.url = pluckedT[i];
             element.changefreq = 'daily';
             element.priority = 0.8;
-                                    // console.log('line 45 ~~~  element'.white, element);
-                                    // console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
+                                    console.log('line 45 ~~~  element'.white, element);
+                                    console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
             urlArr.push(element);
-                                            // console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
+                                            console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
         };
 
         
@@ -190,20 +188,16 @@ router.get('/youtube/:name', function (req, res, next) {
 // */*/*/********/  // trends // */*/*/********/  // */*/*/********/  //
 
 router.get('/trends', function (req, res, next) {
-    Trend.find(function (err, trends) {
+
+    Trend.find().sort({_id:-1}).limit(200).exec( function (err, trends) {
         if (err) {
-            // console.log(err);
+            console.log("error in index.js line 206", err);
             return next(err);
         }
         res.json(trends);
     });
+
 });
-
-
-
-
-
-
 
 
 
