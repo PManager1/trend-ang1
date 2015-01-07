@@ -63,17 +63,17 @@ console.log(' callign trends .... in Routes.index.js  line 51');
             element.url = pluckedT[i];
             element.changefreq = 'daily';
             element.priority = 0.8;
-                                    console.log('line 45 ~~~  element'.white, element);
-                                    console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
+                                    // console.log('line 45 ~~~  element'.white, element);
+                                    // console.log('line 46 ~~~  before url Arr  '.blue, urlArr);
             urlArr.push(element);
-                                            console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
+                                            // console.log('line 48 ~~~  after url Arr  '.blue, urlArr);
         };
 
         
-        console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ urlArr  = '.white, urlArr);
+        // console.log( ' urlArr =~~~~~~~~~~~~~~~~ line 51 ~~~ urlArr  = '.white, urlArr);
 
 
-        console.log( ' urlArr.length =~~~~~~~~~~~~~~~~ line  ~~~ white ==> '.red, urlArr.length);
+        // console.log( ' urlArr.length =~~~~~~~~~~~~~~~~ line  ~~~ white ==> '.red, urlArr.length);
 
         req.trends = urlArr;
         // console.log(' req, trends  ==', req.trends);

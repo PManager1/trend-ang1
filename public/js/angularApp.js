@@ -76,7 +76,6 @@ potatoNews.controller('idCtrl', ['$scope', '$state', '$window','$stateParams','y
 
 function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval) {
 
-
                 // $scope.person = $scope.contacts[$stateParams.id];
                 console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
 
