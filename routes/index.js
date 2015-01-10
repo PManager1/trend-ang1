@@ -133,17 +133,22 @@ router.get('/sitemap.xml', getTrends, function(req, res) {
 // */*/*/********/  //  tweets   // */*/*/********/  // */*/*/********/  //
 
 
-// router.get('/trends_2', function (req, res, next) {
+router.get('/tweets/:name', function (req, res, next) {
 
-//     Trend.find().sort({_id:-1}).limit(200).exec( function (err, trends) {
-//         if (err) {
-//             console.log("error in index.js line 206", err);
-//             return next(err);
-//         }
-//         res.json(trends);
-//     });
+    // youtube.search(req.params.name, 2, function(resultData) {
+    //     res.json(resultData);
+    // });
 
-// });
+
+    Trend.findOne({ tName: '#GleePremiere' }, function(err, record) {
+          if (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.json(record);
+    });
+
+});
 
 
 
@@ -168,7 +173,7 @@ router.get('/youtube', function (req, res, next) {
 });
 
 router.get('/youtube/:name', function (req, res, next) {
-    // console.log(' ~~ :id callign /youtube router.index id= '.white, req.params.name); 
+    // console.log(' ~~ hola hola hola :id callign /youtube router.index id= '.white, req.params.name); 
     youtube.search(req.params.name, 4, function(resultData) {
 
         res.json(resultData);
@@ -224,24 +229,6 @@ router.param('post', function (req, res, next, id) {
         if (!post) { return next(new Error("Cannot find post!")); }
         req.post = post;
         return next();
-    });
-});
-
-//for comment upvotes, I also need a comment param
-router.param('comment', function (req, res, next, id) {
-    console.log('comment param');
-    var query = Comment.findById(id);
-    query.exec(function (err, comment) {
-        if (err) {return next(err); }
-        if (!comment) { return next(new Error("Cannot find comment!")); }
-        req.comment = comment;
-        return next();
-    });
-});
-
-router.get('/posts/:post', function (req, res) {
-    req.post.populate('comments', function (err, post) {
-        res.json(req.post);
     });
 });
 

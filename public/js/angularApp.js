@@ -1,6 +1,6 @@
 var underscore = angular.module('potatoNews', []);
 underscore.factory('_', function() {
-  return window._; // assumes underscore has already been loaded on the page
+    return window._; // assumes underscore has already been loaded on the page
 });
 
 
@@ -44,7 +44,7 @@ potatoNews.config([
             .state('robots', { // */*/*/*/   new 
                 url: '/robots.txt',
                 templateUrl: '/robots.txt'
-                // controller: 'hola'
+                    // controller: 'hola'
             })
 
 
@@ -56,14 +56,14 @@ potatoNews.config([
             controller: 'idCtrl',
             resolve: {
 
-                ytPromise: ['$stateParams','ytfac', function($stateParams, ytfac) {
+                ytPromise: ['$stateParams', 'ytfac', function($stateParams, ytfac) {
                     return ytfac.get($stateParams.id);
                 }],
 
-                tweetsPromise: ['$stateParams','tweets', function($stateParams, tweets) {
+                tweetsPromise: ['$stateParams', 'tweets', function($stateParams, tweets) {
                     return tweets.get($stateParams.id);
                     // return tweets.getAll();                    
-                }]                
+                }]
             }
         })
 
@@ -77,76 +77,90 @@ potatoNews.config([
 // id controller
 
 
-potatoNews.controller('idCtrl', ['$scope', '$state', '$window','$stateParams','ytfac','_','Instagram','$interval','tweets',
+potatoNews.controller('idCtrl', ['$scope', '$state', '$window', '$stateParams', 'ytfac', '_', 'Instagram', '$interval', '$http',
 
-function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval, tweets) {
+    function($scope, $state, $window, $stateParams, ytfac, _, Instagram, $interval, $http) {
 
-                // $scope.person = $scope.contacts[$stateParams.id];
-                console.log("line 80 --- $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
+        // $scope.person = $scope.contacts[$stateParams.id];
+        console.log("line 80 --- $$$$$$$$$$$  $stateParams.id  =", $stateParams.id);
 
-// showing tweets
-                console.log( 'tweets line 89  = ', tweets);            
-
-// end showing tweets
-
-                console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', ytfac.idfac);
-
-                // $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
-
-                // grabing the items from response factory 
-                $scope.ytfac = ytfac.idfac.data.items;
-                console.log('----->>> ytfac from the factory  !!!!!!!!!!!!!!!! returning  ytfac.idfac', $scope.ytfac);
-                var pluck =  _.pluck($scope.ytfac, 'id');
-                var pluck =  _.pluck(pluck, 'videoId');                
-
-                console.log(' plucked items =', pluck);
-                $scope.ylinks = pluck;
-                $scope.product = {
-                    medium: $scope.ylinks
-                };
-
-                $scope.getIframeSrc = function(src) {
-                    return 'https://www.youtube.com/embed/' + src;
-                };
-
-                $scope.searchquery = $stateParams.id; 
-                console.log(" $$$$$$$$$$$  $scope.searchquery =", $scope.searchquery); 
-//refresh the view 
-                $scope.refreshView = function  () {
-                    console.log(' clicked refresh View');    
-                }; 
-// end refresh the view 
-// instagram
-                $scope.example1 = {
-                    hash: $stateParams.id
-                };
+        // showing tweets
+        // console.log('tweets line 89  = ', tweets);
+        $scope.tweetArr; 
+       
+        get_tweets = function(id) {
+            console.log('  === callign get tweets');
+            // o.trends.length = 0
+            console.log(' ~~~~~~~~~ calling  tweets with id  line  94 ~~~~~~~~~~~~  id= ', id);
+            return $http.get('/tweets/' + id).success(function(record) {
+                console.log(' >>>>>> tweets 95 = ', record.tweetArr);
+                $scope.tweetArr = record.tweetArr; 
+            });
+        };
+        get_tweets($stateParams.id); 
 
 
-                var instagramSuccess = function(scope, res) {
-                    if (res.meta.code !== 200) {
-                        scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
-                        return;
-                    }
-                    if (res.data.length > 0) {
-                        scope.items = res.data;
-                    } else {
-                        scope.error = "This hashtag has returned no results";
-                    }
-                };
+
+        // end showing tweets
+
+        console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', ytfac.idfac);
+
+        // $scope.ylinks = ['v5Asedlj2cw', 'vRC64LiJdvo', 'p8xUVO74YDU'];
+
+        // grabing the items from response factory 
+        $scope.ytfac = ytfac.idfac.data.items;
+        console.log('----->>> ytfac from the factory  !!!!!!!!!!!!!!!! returning  ytfac.idfac', $scope.ytfac);
+        var pluck = _.pluck($scope.ytfac, 'id');
+        var pluck = _.pluck(pluck, 'videoId');
+
+        console.log(' plucked items =', pluck);
+        $scope.ylinks = pluck;
+        $scope.product = {
+            medium: $scope.ylinks
+        };
+
+        $scope.getIframeSrc = function(src) {
+            return 'https://www.youtube.com/embed/' + src;
+        };
+
+        $scope.searchquery = $stateParams.id;
+        console.log(" $$$$$$$$$$$  $scope.searchquery =", $scope.searchquery);
+        //refresh the view 
+        $scope.refreshView = function() {
+            console.log(' clicked refresh View');
+        };
+        // end refresh the view 
+        // instagram
+        $scope.example1 = {
+            hash: $stateParams.id
+        };
 
 
-            function loadInstagram () {
-                      Instagram.get(12, $stateParams.id).success(function(response) {
-                        console.log(' instagram  response  = ', response);
-                        console.log(' ~~~~~~~~~~~~~~~ $scope.example1 =', $scope.example1);
-                        instagramSuccess($scope.example1, response);
-                         $state.reload();  
-                    });
-            };
+        var instagramSuccess = function(scope, res) {
+            if (res.meta.code !== 200) {
+                scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
+                return;
+            }
+            if (res.data.length > 0) {
+                scope.items = res.data;
+            } else {
+                scope.error = "This hashtag has returned no results";
+            }
+        };
 
-            loadInstagram();
-            
-   }
+
+        function loadInstagram() {
+            Instagram.get(12, $stateParams.id).success(function(response) {
+                console.log(' instagram  response  = ', response);
+                console.log(' ~~~~~~~~~~~~~~~ $scope.example1 =', $scope.example1);
+                instagramSuccess($scope.example1, response);
+                $state.reload();
+            });
+        };
+
+        loadInstagram();
+
+    }
 ]);
 
 
@@ -167,18 +181,18 @@ potatoNews.factory('tweets', ['$http', function($http) { // new trend factory
         $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
 
-            console.log(' !!!!!! get 175 ~~ o.trends = ',  o.trends);             
+            console.log(' !!!!!! get 175 ~~ o.trends = ', o.trends);
         });
     };
 
 
     o.get = function(id) {
-         o.trends.length = 0
-        console.log(' ~~~~~~~~~ calling  tweets with id  line  177 ~~~~~~~~~~~~~~~~~~~~  id= ',id);
+        o.trends.length = 0
+        console.log(' ~~~~~~~~~ calling  tweets with id  line  177 ~~~~~~~~~~~~~~~~~~~~  id= ', id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);
             console.log(' !!!!!! get tweets 180 = ', data);
-            console.log(' !!!!!! get tweets  181 ~~ o.tweet = ',  o.trends);            
+            console.log(' !!!!!! get tweets  181 ~~ o.tweet = ', o.trends);
         });
     };
 
@@ -221,14 +235,6 @@ potatoNews.factory('tweets', ['$http', function($http) { // new trend factory
 
 
 
-
-
-
-
-
-
-
-
 // wiki FACTORY 
 var potatoNews = angular.module('potatoNews');
 
@@ -242,12 +248,12 @@ potatoNews.factory('wiki', ['$http', function($http) { // new trend factory
 
 
     o.get = function(id) {
-         o.idfac.length = 0
-        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
+        o.idfac.length = 0
+        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ', id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);
             console.log(' !!!!!! get copied data 239 = ', data);
-            console.log(' !!!!!! get 240 wiki ~~ o.idfac = ',  o.idfac);            
+            console.log(' !!!!!! get 240 wiki ~~ o.idfac = ', o.idfac);
         });
     };
 
@@ -294,15 +300,13 @@ potatoNews.factory('Instagram', ['$http',
 
 
 
-
-
 // TRENDS CONTROLLER
 
 potatoNews.controller('TrendCtrl', ['$scope', 'trends',
     function($scope, trends) {
 
         $scope.trends = trends.trends;
-        
+
 
         $('.nobullets').on("click", ".trendli", function(e) {
             var text = ($(this).text());
@@ -354,11 +358,6 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
 
 
 
-
-
-
-
-
 // yt FACTORY 
 var potatoNews = angular.module('potatoNews');
 
@@ -373,7 +372,7 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
     o.getAll = function() {
         console.log('calling  yt  getAll ');
         return $http.get('/youtube').success(function(data) {
-            console.log('/youtube   data = ', data);            
+            console.log('/youtube   data = ', data);
             angular.copy(data, o.ytfac);
         });
     };
@@ -381,12 +380,12 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
 
 
     o.get = function(id) {
-         o.idfac.length = 0
-        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
+        o.idfac.length = 0
+        console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ', id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);
             console.log(' !!!!!! get copied data  378  ytfac = ', data);
-            console.log(' !!!!!! get 379 ytfac ~~ o.idfac = ',  o.idfac);            
+            console.log(' !!!!!! get 379 ytfac ~~ o.idfac = ', o.idfac);
         });
     };
 
@@ -412,7 +411,7 @@ potatoNews.factory('trends', ['$http', function($http) { // new trend factory
         $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
 
-            console.log(' !!!!!! get 385 ~~ o.trends = ',  o.trends);             
+            console.log(' !!!!!! get 385 ~~ o.trends = ', o.trends);
         });
     };
     //grab a single post from the server
@@ -435,7 +434,3 @@ potatoNews.factory('_', ['$http', function($http) { // new trend factory
     return window._;
 
 }]);
-
-
-
-
