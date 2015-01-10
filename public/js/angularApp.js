@@ -58,7 +58,12 @@ potatoNews.config([
 
                 ytPromise: ['$stateParams','ytfac', function($stateParams, ytfac) {
                     return ytfac.get($stateParams.id);
-                }]
+                }],
+
+                tweetsPromise: ['$stateParams','tweets', function($stateParams, tweets) {
+                    // return tweets.get($stateParams.id);
+                    return tweets.getAll();                    
+                }]                
             }
         })
 
@@ -72,12 +77,17 @@ potatoNews.config([
 // id controller
 
 
-potatoNews.controller('idCtrl', ['$scope', '$state', '$window','$stateParams','ytfac','_','Instagram','$interval',
+potatoNews.controller('idCtrl', ['$scope', '$state', '$window','$stateParams','ytfac','_','Instagram','$interval','tweets',
 
-function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval) {
+function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval, tweets) {
 
                 // $scope.person = $scope.contacts[$stateParams.id];
-                console.log(" $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
+                console.log("line 80 --- $$$$$$$$$$$  $stateParams.id  =", $stateParams.id); 
+
+// showing tweets
+                console.log( 'tweets line 89  = ', tweets);            
+
+// end showing tweets
 
                 console.log(' ytfac from the factory  !!!!!!!!!!!!!!!!  ytfac.idfac', ytfac.idfac);
 
@@ -136,11 +146,70 @@ function($scope, $state, $window, $stateParams, ytfac, _ , Instagram, $interval)
 
             loadInstagram();
             
-
-
-
    }
 ]);
+
+
+
+
+// //  tweets factory 
+
+var potatoNews = angular.module('potatoNews');
+
+potatoNews.factory('tweets', ['$http', function($http) { // new trend factory
+
+    console.log(' inside the tweets factory  ~~~~~~~~~~~~~ line 31567 ');
+    var o = {
+        trends: []
+    };
+
+    o.getAll = function() {
+        $http.get('/trends').success(function(data) {
+            angular.copy(data, o.trends);
+
+            console.log(' !!!!!! get 175 ~~ o.trends = ',  o.trends);             
+        });
+    };
+    //grab a single post from the server
+    return o;
+}]);
+
+
+
+
+
+// // Trends FACTORY 
+// var potatoNews = angular.module('potatoNews');
+
+// potatoNews.factory('trends', ['$http', function($http) { // new trend factory
+//     // debugger;
+//     var o = {
+//         trends: []
+//     };
+
+//     o.getAll = function() {
+//         $http.get('/trends_2').success(function(data) {
+//             angular.copy(data, o.trends);
+
+//             console.log(' !!!!!! get 385 ~~ o.trends = ',  o.trends);             
+//         });
+//     };
+//     //grab a single post from the server
+//     return o;
+// }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -162,20 +231,13 @@ potatoNews.factory('wiki', ['$http', function($http) { // new trend factory
         console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);
-            console.log(' !!!!!! get copied data = ', data);
-            console.log(' !!!!!! get 186 ~~ o.idfac = ',  o.idfac);            
+            console.log(' !!!!!! get copied data 239 = ', data);
+            console.log(' !!!!!! get 240 wiki ~~ o.idfac = ',  o.idfac);            
         });
     };
 
     return o;
 }]);
-
-
-
-
-
-
-
 
 
 
@@ -271,6 +333,17 @@ potatoNews.controller('youtubeCtrl', ['$scope', 'ytfac',
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 // yt FACTORY 
 var potatoNews = angular.module('potatoNews');
 
@@ -297,8 +370,8 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
         console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ',id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);
-            console.log(' !!!!!! get copied data = ', data);
-            console.log(' !!!!!! get 186 ~~ o.idfac = ',  o.idfac);            
+            console.log(' !!!!!! get copied data  378  ytfac = ', data);
+            console.log(' !!!!!! get 379 ytfac ~~ o.idfac = ',  o.idfac);            
         });
     };
 
@@ -324,7 +397,7 @@ potatoNews.factory('trends', ['$http', function($http) { // new trend factory
         $http.get('/trends').success(function(data) {
             angular.copy(data, o.trends);
 
-            console.log(' !!!!!! get 212 ~~ o.trends = ',  o.trends);             
+            console.log(' !!!!!! get 385 ~~ o.trends = ',  o.trends);             
         });
     };
     //grab a single post from the server

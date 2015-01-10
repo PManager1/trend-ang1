@@ -36,7 +36,8 @@ mongoose.connect('mongodb://localhost/news');
 var trendSchema = mongoose.Schema({
     tName: String,
     tName_h: String,    
-    region: String
+    region: String,
+    tweetArr: []
   });
 
 var Trend = mongoose.model('Trend', trendSchema);
@@ -118,14 +119,7 @@ router.get('/sitemap.xml', getTrends, function(req, res) {
 
     _.each(users, function(user){
         sitemap.add(user); 
-        // console.log('user line 110 ='.white,user);
     });
-
-  // sitemap.add({url: '/page-4/', changefreq: 'monthly', priority: 0.7});
-  // sitemap.add({url: '/page-5/'});
-  // sitemap.add(req.newurl); 
-  // console.log('sitemap.urls ======'.white, sitemap.urls);
-
 });
 
 
@@ -136,16 +130,22 @@ router.get('/sitemap.xml', getTrends, function(req, res) {
 
 
 
+// */*/*/********/  //  tweets   // */*/*/********/  // */*/*/********/  //
 
 
+// router.get('/trends_2', function (req, res, next) {
+
+//     Trend.find().sort({_id:-1}).limit(200).exec( function (err, trends) {
+//         if (err) {
+//             console.log("error in index.js line 206", err);
+//             return next(err);
+//         }
+//         res.json(trends);
+//     });
+
+// });
 
 
-
-
-
-
-
-// ~~~~~~~~~~~~~~~~~~~
 
 
 /* GET home page. */
@@ -167,9 +167,6 @@ router.get('/youtube', function (req, res, next) {
     
 });
 
-
-
-
 router.get('/youtube/:name', function (req, res, next) {
     // console.log(' ~~ :id callign /youtube router.index id= '.white, req.params.name); 
     youtube.search(req.params.name, 4, function(resultData) {
@@ -179,14 +176,7 @@ router.get('/youtube/:name', function (req, res, next) {
     });
 });
 
-
-
-
-
-
-
 // */*/*/********/  // trends // */*/*/********/  // */*/*/********/  //
-
 router.get('/trends', function (req, res, next) {
 
     Trend.find().sort({_id:-1}).limit(200).exec( function (err, trends) {

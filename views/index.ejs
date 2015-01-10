@@ -74,8 +74,6 @@
 
 
 
-
-
         <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
 
         <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
@@ -88,9 +86,10 @@
                     <h4>World-wide </h4>
 
                     <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">
+
                         <a class="trenda" href="#/trend/{{trend.tName_h}}">
-                    {{trend.tName}}
-                    </a>
+                        {{trend.tName}}
+                        </a>
                     </li>
                 </ul>
 
