@@ -61,8 +61,8 @@ potatoNews.config([
                 }],
 
                 tweetsPromise: ['$stateParams','tweets', function($stateParams, tweets) {
-                    // return tweets.get($stateParams.id);
-                    return tweets.getAll();                    
+                    return tweets.get($stateParams.id);
+                    // return tweets.getAll();                    
                 }]                
             }
         })
@@ -170,6 +170,21 @@ potatoNews.factory('tweets', ['$http', function($http) { // new trend factory
             console.log(' !!!!!! get 175 ~~ o.trends = ',  o.trends);             
         });
     };
+
+
+    o.get = function(id) {
+         o.trends.length = 0
+        console.log(' ~~~~~~~~~ calling  tweets with id  line  177 ~~~~~~~~~~~~~~~~~~~~  id= ',id);
+        return $http.get('/youtube/' + id).then(function(data) {
+            angular.copy(data, o.idfac);
+            console.log(' !!!!!! get tweets 180 = ', data);
+            console.log(' !!!!!! get tweets  181 ~~ o.tweet = ',  o.trends);            
+        });
+    };
+
+
+
+
     //grab a single post from the server
     return o;
 }]);
