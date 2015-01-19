@@ -9,19 +9,20 @@
 
     <meta name="keywords" content="whats trending, whats trening on twitter,whats trending on google, whats trending on instagram, instagram trending, whats trending on flickr, flikr tredning, facebook trending, whats trending on facebook ">
 
+    <meta name="twitter:widgets:csp" content="on">
+
     <title>Trends</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+
+
+   <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>  
     <script src="js/angularjs1.2.19.js"></script>
-
     <script src="js/ui-router0.2.10.js"></script>
-
-    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>    
-
-
+   
     <script src="js/underscore.js-1.7.0.js"></script>
-
     <script src="js/GA.js"></script>
+    <script src="js/tweets.js"></script>
     
 
 </head>
@@ -38,22 +39,18 @@
 
 
     <!-- TREND  -->
-    <script type="text/ng-template" id="/trend.html">
 
-        <header class="my-header">
-            <a href="/">
-                <h1 class="h1trend"> Trending2 </h1> </a>
-        </header>
+
 
 
 
 
 
 <div class="container">
-    <h2>Tweet-main Feed</h2>
+    <h2>Index.ejs</h2>
     <div class="row clearfix">
-        <blockquote class="twitter-tweet" lang="en">
-            <a href="https://twitter.com/vine/status/550368894805102592"></a>
+         <blockquote class="twitter-tweet" lang="en">
+            <a href="https://twitter.com/23243F/status/553762212981252096">Jan 10, 2014</a>
         </blockquote>
     </div>
 
@@ -63,108 +60,15 @@
 
 
 
-        <div class="container">
-            <div class="row clearfix">
-                <div class="col-md-10 col-md-offset-2 column">
-
-
-                   
-                        <div id="DIV_4">
-                            <div id="DIV_5">
-                                <input id="INPUT_6" ng-model="query" name="search[query]" placeholder="Search trends...." type="text" />
-                            </div>
-                            <div id="DIV_7">
-                                <a href="#/trend/{{query}}" value="search" class="orange-btn" id="INPUT_8">search<a/>
-                                
-                            </div>
-
-                        </div>
-
-
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-        <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
-
-        <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
-
-
-
-        <div class="container">
-            <div class="row ">
-                <ul class="col-md-3 nobullets">
-                    <h4>World-wide </h4>
-
-                    <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">
-
-                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
-                        {{trend.tName}}
-                        </a>
-                    </li>
-                </ul>
-
-
-
-                <ul class="col-md-3 nobullets">
-                    <h4>US </h4>
-                    <li class="trendli" ng-repeat="trend in trends | filter:'US' | orderBy:'-_id' | limitTo: '12'">
-                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
-                    {{trend.tName}}
-                    </a>
-                    </li>
-                </ul>
-
-
-
-
-                <ul class="col-md-3 nobullets">
-                    <h4>Asia </h4>
-                    <li class="trendli" ng-repeat="trend in trends | filter:'ASIA' | orderBy:'-_id' | limitTo: '12'">
-                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
-                    {{trend.tName}}
-                    </a>
-                    </li>
-                </ul>
-
-                <ul class="col-md-3 nobullets">
-                    <h4>Europe </h4>
-                    <li class="trendli" ng-repeat="trend in trends | filter:'EU' | orderBy:'-_id' | limitTo: '12'">
-                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
-                    {{trend.tName}}
-                    </a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-
-
-
-        <div class="container">
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div ui-view></div>
-                </div>
-            </div>
-        </div>
-    </script>
-    <!-- end of /trend template -->
-
-
-
 
 
     <script src="js/angularApp.js"></script>
     <script src="js/jquery.js"> </script>
     <script src="js/script.js"></script>
+
+    <script src="js/tweets.js"></script>
     <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>    
+
 
 
 </body>

@@ -23,14 +23,15 @@ potatoNews.config(function($sceDelegateProvider) {
 potatoNews.config([
     '$stateProvider',
     '$urlRouterProvider',
-    '$locationProvider',
-    function($stateProvider, $urlRouterProvider, $locationProvider) {
+    '$locationProvider',  
+    '$httpProvider',      
+    function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
 
         $stateProvider
             .state('trend', { // */*/*/*/   new 
                 url: '/trend',
-                templateUrl: '/trend.html',
+                templateUrl: 'trends.html',
                 controller: 'TrendCtrl',
                 resolve: {
                     postPromise: ['trends', function(trends) {
@@ -44,7 +45,6 @@ potatoNews.config([
             .state('robots', { // */*/*/*/   new 
                 url: '/robots.txt',
                 templateUrl: '/robots.txt'
-                    // controller: 'hola'
             })
 
 
@@ -67,7 +67,57 @@ potatoNews.config([
             }
         })
 
+
+
+        $stateProvider
+            .state('tweets', { // */*/*/*/   new 
+                url: '/tweets',
+                templateUrl: '/tweets.html',
+                controller: 'tweetCtrl'
+            })
+
+
+
+
         $urlRouterProvider.otherwise('trend');
+
+
+
+    $httpProvider.defaults.headers.common = {};
+    $httpProvider.defaults.headers.post = {};
+    $httpProvider.defaults.headers.put = {};
+    $httpProvider.defaults.headers.patch = {};
+
+
+    }
+]);
+
+
+
+
+
+// Tweets CONTROLLER
+
+potatoNews.controller('tweetCtrl', ['$scope', '$http',
+    function($scope, $http) {
+
+        // $scope.tweetArr; 
+
+        // get_tweets = function(id) {
+        //     console.log('  === callign get tweets');
+        //     // o.trends.length = 0
+        //     console.log(' ~~~~~~~~~ calling  tweets with id  line  94 ~~~~~~~~~~~~  id= ', id);
+        //     return $http.get('/tweets/' + id).success(function(record) {
+        //         console.log(' >>>>>> tweets 95 = ', record.tweetArr);
+        //         $scope.tweetArr = record.tweetArr; 
+        //     });
+        // };
+        // get_tweets('GleePremiere'); 
+
+
+$scope.tweets = [{"https://twitter.com/23243F/status/553762212981252096"},{"https://twitter.com/23243F/status/553762208791154688"},{"https://twitter.com/23243F/status/553762208287821824"}];
+
+
     }
 ]);
 
@@ -88,16 +138,16 @@ potatoNews.controller('idCtrl', ['$scope', '$state', '$window', '$stateParams', 
         // console.log('tweets line 89  = ', tweets);
         $scope.tweetArr; 
        
-        get_tweets = function(id) {
-            console.log('  === callign get tweets');
-            // o.trends.length = 0
-            console.log(' ~~~~~~~~~ calling  tweets with id  line  94 ~~~~~~~~~~~~  id= ', id);
-            return $http.get('/tweets/' + id).success(function(record) {
-                console.log(' >>>>>> tweets 95 = ', record.tweetArr);
-                $scope.tweetArr = record.tweetArr; 
-            });
-        };
-        get_tweets($stateParams.id); 
+        // get_tweets = function(id) {
+        //     console.log('  === callign get tweets');
+        //     // o.trends.length = 0
+        //     console.log(' ~~~~~~~~~ calling  tweets with id  line  94 ~~~~~~~~~~~~  id= ', id);
+        //     return $http.get('/tweets/' + id).success(function(record) {
+        //         console.log(' >>>>>> tweets 95 = ', record.tweetArr);
+        //         $scope.tweetArr = record.tweetArr; 
+        //     });
+        // };
+        // get_tweets($stateParams.id); 
 
 
 
@@ -384,8 +434,8 @@ potatoNews.factory('ytfac', ['$http', function($http) { // new trend factory
         console.log(' ~~~~~~~~~ calling  yt.get with id  --- line  185 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  id= ', id);
         return $http.get('/youtube/' + id).then(function(data) {
             angular.copy(data, o.idfac);
-            console.log(' !!!!!! get copied data  378  ytfac = ', data);
-            console.log(' !!!!!! get 379 ytfac ~~ o.idfac = ', o.idfac);
+            // console.log(' !!!!!! get copied data  378  ytfac = ', data);
+            // console.log(' !!!!!! get 379 ytfac ~~ o.idfac = ', o.idfac);
         });
     };
 

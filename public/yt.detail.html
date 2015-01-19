@@ -1,21 +1,23 @@
+
+
+
+
+
+
+
+
 <div class="container">
-    <h2>Tweet- Partial Feed  GleePremiere</h2>
-    
-    
-    <div class="" ng-repeat="tweet in tweetArr">  
-            {{tweet}}
+    <h2>Tweet yt Feed</h2>
 
-        <blockquote class="twitter-tweet" lang="en">
-            <a href="https://twitter.com/vine/status/550368894805102592"></a>
-        </blockquote>
-
-        <!-- <a href="{{tweet}}" -->
-    </div>
-
+    <ul>
+        <li ng-repeat="link in tweetArr">
+            <blockquote class="twitter-tweet" lang="en">
+                <a href={{link}} >Jan, 2015</a>
+             </blockquote>  
+        </li>
+    </ul>
 
 </div>
-
-
 
 
 
@@ -64,6 +66,14 @@
         </div>
 
     </div>
+
+
+
+
+
+
+      
+
 
 
 
