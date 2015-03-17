@@ -6,7 +6,7 @@
  ~/Movies/mongodb-osx-x86_64-2.6.4
 ○ bin/mongod
 
-
+-- add functionality to auto tweet on twitter upon page load. 
 
 =========
 
