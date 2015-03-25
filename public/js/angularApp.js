@@ -115,7 +115,7 @@ potatoNews.controller('tweetCtrl', ['$scope', '$http',
         // get_tweets('GleePremiere'); 
 
 
-$scope.tweets = [{"https://twitter.com/23243F/status/553762212981252096"},{"https://twitter.com/23243F/status/553762208791154688"},{"https://twitter.com/23243F/status/553762208287821824"}];
+// $scope.tweets = [{"https://twitter.com/23243F/status/553762212981252096"},{"https://twitter.com/23243F/status/553762208791154688"},{"https://twitter.com/23243F/status/553762208287821824"}];
 
 
     }

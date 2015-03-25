@@ -1,6 +1,7 @@
+how to do on dev settings
+
  ~/Movies/code/meanStack/trend-ang1 on master!
 ± no bin/www
-
 
 
  ~/Movies/mongodb-osx-x86_64-2.6.4
@@ -10,7 +11,7 @@
 
 =========
 
-how to do on prod
+how to do on prod settings
 
 
 
