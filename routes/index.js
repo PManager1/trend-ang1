@@ -10,9 +10,7 @@ var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 
 
-
 // var Trend = mongoose.model('Trend'); 
-
 
 var youtube = require('youtube-node');
 youtube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
