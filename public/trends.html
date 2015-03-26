@@ -1,0 +1,108 @@
+
+
+
+
+
+
+
+        <header class="my-header">
+            <a href="/">
+                <h1 class="h1trend"> Discover trending topics world wide </h1> </a>
+        </header>
+
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-10 col-md-offset-2 column">
+
+
+                   
+                        <div id="DIV_4">
+                            <div id="DIV_5">
+                                <input id="INPUT_6" ng-model="query" name="search[query]" placeholder="Search trends...." type="text" />
+                            </div>
+                            <div id="DIV_7">
+                                <a href="#/trend/{{query}}" value="search" class="orange-btn" id="INPUT_8">search<a/>
+                                
+                            </div>
+
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <a href="#/youtube/:{{trend.trendName}}">{{trend.trendName}} </a>
+
+        <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
+
+
+
+        <div class="container">
+            <div class="row ">
+                <ul class="col-md-3 nobullets">
+                    <h4>World-wide </h4>
+
+                    <li class="trendli" ng-repeat="trend in trends | filter:'WW' | orderBy:'-_id' | limitTo: '12'">
+
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                        {{trend.tName}}
+                        </a>
+                    </li>
+                </ul>
+
+
+
+                <ul class="col-md-3 nobullets">
+                    <h4>US </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'US' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
+                    </a>
+                    </li>
+                </ul>
+
+
+
+
+                <ul class="col-md-3 nobullets">
+                    <h4>Asia </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'ASIA' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
+                    </a>
+                    </li>
+                </ul>
+
+                <ul class="col-md-3 nobullets">
+                    <h4>Europe </h4>
+                    <li class="trendli" ng-repeat="trend in trends | filter:'EU' | orderBy:'-_id' | limitTo: '12'">
+                        <a class="trenda" href="#/trend/{{trend.tName_h}}">
+                    {{trend.tName}}
+                    </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+        <div class="container">              <!-- here it loads the yt.detail.html -->
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div ui-view></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
